@@ -1,13 +1,13 @@
 package ru.stqa.geometry.figures;
 
 public class Square {
-    public static void printSquareArea(int side) {
-        String text = String.format("The area of a square with a side %d = %d%n",
-                side, geSquare(side));
-        System.out.printf(text);
+    public static void printSquareArea(double side) {
+        String text = String.format("The area of a square with a side %.1f = %.1f%n",
+                side, getSquare(side));
+        System.out.println(text);
     }
 
-    public static int geSquare(int a) {
+    public static double getSquare(double a) {
         return a * a;
     }
 }
