@@ -4,18 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SquareTests {
-    Square s = new Square(5.0);
+public class CircleTests {
+    Circle c = new Circle(5.0);
 
     @Test
     void canCalculateArea() {
-        var result = s.getArea();
-        assertEquals(25.0, result);
+        var result = c.getArea();
+        assertEquals(78.5, result, 0.1);
     }
 
     @Test
     void canCalculatePerimeter() {
-        var result = s.getPerimeter();
-        assertEquals(20.0, result);
+        var result = c.getPerimeter();
+        assertEquals(31.4, result, 0.1);
     }
 }

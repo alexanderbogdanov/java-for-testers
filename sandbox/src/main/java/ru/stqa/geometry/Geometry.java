@@ -1,15 +1,23 @@
 package ru.stqa.geometry;
 
-import ru.stqa.geometry.figures.Rectangle;
-import ru.stqa.geometry.figures.Square;
+import ru.stqa.geometry.figures.*;
 
 
 public class Geometry {
     public static void main(String[] args) {
-        Square.printSquareArea(new Square(7.0));
-        Square.printSquarePerimeter(new Square (5.0));
-        Rectangle.printRectangleArea(new Rectangle(3.0, 5.0));
-        Rectangle.printRectanglePerimeter(new Rectangle(3.0, 5.0));
+        Square square = new Square(7.0);
+        Circle circle = new Circle(5.0);
+        Rectangle rectangle = new Rectangle(3.0, 5.0);
+
+        GeometricPrinter.printArea(square);
+        GeometricPrinter.printPerimeter(square);
+
+        GeometricPrinter.printArea(circle);
+        GeometricPrinter.printPerimeter(circle);
+
+        GeometricPrinter.printArea(rectangle);
+        GeometricPrinter.printPerimeter(rectangle);
+
     }
 
 }
