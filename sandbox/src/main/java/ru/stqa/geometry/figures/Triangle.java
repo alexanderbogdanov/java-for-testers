@@ -1,6 +1,6 @@
 package ru.stqa.geometry.figures;
 
-public record Triangle(double a, double b, double c) implements GeometricFigure  {
+public record Triangle(double a, double b, double c) implements GeometricFigure {
     public double getArea() {
         double semiPerimeter = this.getPerimeter() / 2;
         return Math.sqrt(semiPerimeter * (semiPerimeter - this.a)

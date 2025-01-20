@@ -47,9 +47,4 @@ public class TriangleTests {
         var result = t.getPerimeter();
         assertEquals(18.0, result);
     }
-
-
-
-
-
 }
