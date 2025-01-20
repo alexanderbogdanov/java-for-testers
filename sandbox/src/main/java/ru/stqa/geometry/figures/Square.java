@@ -17,15 +17,15 @@ public class Square {
         return 4 * this.side;
     }
 
-    public void printSquareArea() {
+    public static void printSquareArea(Square s) {
         String text = String.format("The area of a square with a side %.1f is %.1f",
-                this.side, this.getArea());
+                s.side, s.getArea());
         System.out.println(text);
     }
 
-    public void printSquarePerimeter() {
+    public static void printSquarePerimeter(Square s) {
         String text = String.format("The perimeter of a square with a side %.1f is %.1f",
-                this.side, this.getPerimeter());
+                s.side, s.getPerimeter());
         System.out.println(text);
     }
 
