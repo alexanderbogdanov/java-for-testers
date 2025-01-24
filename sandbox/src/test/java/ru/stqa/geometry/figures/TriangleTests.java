@@ -58,7 +58,8 @@ public class TriangleTests {
             "1.0, 2.0, 3.0, 'Sides do not satisfy the triangle inequality: a=1.0, b=2.0, c=3.0'",
             "5.0, 1.0, 1.0, 'Sides do not satisfy the triangle inequality: a=5.0, b=1.0, c=1.0'"
     })
-    void canNotHaveInvalidSides(double a, double b, double c, String expectedMessage) {
+    void throwsExceptionForInvalidSides(double a, double b, double c, String expectedMessage) {
+        System.out.printf("Testing invalid triangle with sides: a=%.1f, b=%.1f, c=%.1f%n", a, b, c);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new Triangle(a, b,c)
