@@ -1,6 +1,8 @@
 package ru.stqa.geometry.figures;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -63,13 +65,18 @@ public class TriangleTests {
         assertEquals(12.0, result);
     }
 
-    @Test
-    void canNotHaveNegativeOrZeroSides() {
+    @ParameterizedTest
+    @CsvSource({
+            "-3.0, 4.0, 5.0, 'Sides of a triangle must be positive: a=-3.0, b=4.0, c=5.0'",
+            "3.0, 0.0, 5.0, 'Sides of a triangle must be positive: a=3.0, b=0.0, c=5.0'",
+            "1.0, 2.0, 3.0, 'Sides do not satisfy the triangle inequality: a=1.0, b=2.0, c=3.0'",
+            "5.0, 1.0, 1.0, 'Sides do not satisfy the triangle inequality: a=5.0, b=1.0, c=1.0'"
+    })
+    void canNotHaveInvalidSides(double a, double b, double c, String expectedMessage) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Triangle(-3.0, 4.0, 5.0)
-
+                () -> new Triangle(a, b,c)
         );
-        assertEquals("Sides of a triangle must be positive: a=-3.0, b=4.0, c=5.0", exception.getMessage());
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }
