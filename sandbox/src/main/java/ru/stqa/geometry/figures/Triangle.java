@@ -1,6 +1,18 @@
 package ru.stqa.geometry.figures;
 
 public record Triangle(double a, double b, double c) implements GeometricFigure {
+    public Triangle {
+        validateSides(a, b, c);
+    }
+
+    private void validateSides(double a, double b, double c) {
+        if (a <= 0 || b <= 0 || c <= 0) {
+            throw new IllegalArgumentException(String.format(
+                    "Sides of a triangle must be positive: a=%.1f, b=%.1f, c=%.1f", a, b, c));
+        }
+    }
+
+
     public double getArea() {
         double semiPerimeter = this.getPerimeter() / 2;
         return Math.sqrt(semiPerimeter * (semiPerimeter - this.a)
