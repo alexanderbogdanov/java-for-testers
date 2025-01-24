@@ -1,6 +1,15 @@
 package ru.stqa.geometry.figures;
 
 public record Rectangle(double a, double b) implements GeometricFigure {
+
+    public Rectangle {
+        if (a < 0 || b < 0) {
+            throw new IllegalArgumentException(String.format(
+                    "Sides of a rectangle can not be negative: a=%.1f, b=%.1f", a, b));
+        }
+    }
+
+
     public double getArea() {
         return this.a * this.b;
     }

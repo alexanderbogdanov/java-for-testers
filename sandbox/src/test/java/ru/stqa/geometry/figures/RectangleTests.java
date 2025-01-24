@@ -2,7 +2,10 @@ package ru.stqa.geometry.figures;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class RectangleTests {
     Rectangle r = new Rectangle(3.0, 5.0);
@@ -17,5 +20,20 @@ public class RectangleTests {
     void canCalculatePerimeter() {
         var result = r.getPerimeter();
         assertEquals(16.0, result);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "-3.0, 5.0, 'Sides of a rectangle can not be negative: a=-3.0, b=5.0'",
+            "3.0, -5.0, 'Sides of a rectangle can not be negative: a=3.0, b=-5.0'",
+            "-3.0, -5.0, 'Sides of a rectangle can not be negative: a=-3.0, b=-5.0'"
+    })
+    void canNotHaveNegativeSides(double a, double b, String expectedMessage) {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Rectangle(a, b)
+        );
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }
