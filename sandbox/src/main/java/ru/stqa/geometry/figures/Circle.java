@@ -13,6 +13,7 @@ public record Circle(double radius) implements GeometricFigure {
             throw new IllegalArgumentException(String.format(
                     "Radius of a circle must be positive: r=%.1f", radius));
         }
+
     }
 
 
