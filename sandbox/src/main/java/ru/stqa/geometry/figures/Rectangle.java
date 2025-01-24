@@ -3,9 +3,13 @@ package ru.stqa.geometry.figures;
 public record Rectangle(double a, double b) implements GeometricFigure {
 
     public Rectangle {
-        if (a < 0 || b < 0) {
+        validateSides(a, b);
+    }
+
+    private void validateSides(double a, double b) {
+        if (a <= 0 || b <= 0) {
             throw new IllegalArgumentException(String.format(
-                    "Sides of a rectangle can not be negative: a=%.1f, b=%.1f", a, b));
+                    "Sides of a rectangle must be positive: a=%.1f, b=%.1f", a, b));
         }
     }
 
