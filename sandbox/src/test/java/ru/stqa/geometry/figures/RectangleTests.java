@@ -30,7 +30,7 @@ public class RectangleTests {
             "-3.0, -5.0, 'Sides of a rectangle must be positive: a=-3.0, b=-5.0'",
             "0.0, 5.0, 'Sides of a rectangle must be positive: a=0.0, b=5.0'",
             "3.0, 0.0, 'Sides of a rectangle must be positive: a=3.0, b=0.0'",
-            "0.0, 0.0, 'Sides of a rectangle must be positive: a=0.0, b=0.0'" 
+            "0.0, 0.0, 'Sides of a rectangle must be positive: a=0.0, b=0.0'"
     })
     void canNotHaveNegativeSides(double a, double b, String expectedMessage) {
         IllegalArgumentException exception = assertThrows(

@@ -1,7 +1,11 @@
 package ru.stqa.geometry.figures;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -20,13 +24,16 @@ public class SquareTests {
         assertEquals(20.0, result);
     }
 
-    @Test
-    void canNotHaveNegativeSide() {
-        try {
-            new Square(-5.0);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Side of a square can not be negative: -5.0", e.getMessage());
-        }
+    @ParameterizedTest
+    @CsvSource({
+            "-5.0, 'Side of a square must be positive: side=-5.0'",
+            "0.0, 'Side of a square must be positive: side=0.0'"
+    })
+    void canNotHaveNegativeOrZeroSide(double side, String expectedMessage) {
+        IllegalArgumentException exeption = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Square(side)
+        );
+        assertEquals(expectedMessage, exeption.getMessage());
     }
 }
