@@ -30,10 +30,10 @@ public class SquareTests {
             "0.0, 'Side of a square must be positive: side=0.0'"
     })
     void canNotHaveNegativeOrZeroSide(double side, String expectedMessage) {
-        IllegalArgumentException exeption = assertThrows(
+        IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new Square(side)
         );
-        assertEquals(expectedMessage, exeption.getMessage());
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }
