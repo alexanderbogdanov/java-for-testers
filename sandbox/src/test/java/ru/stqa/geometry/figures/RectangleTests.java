@@ -39,4 +39,18 @@ public class RectangleTests {
         );
         assertEquals(expectedMessage, exception.getMessage());
     }
+
+    @Test
+    void testEquality() {
+        var r1 = new Rectangle(3.0, 5.0);
+        var r2 = new Rectangle(3.0, 5.0);
+        assertEquals(r1, r2);
+    }
+
+    @Test
+    void testEqualityWithSwappedSides() {
+        var r1 = new Rectangle(3.0, 5.0);
+        var r2 = new Rectangle(5.0, 3.0);
+        assertEquals(r1, r2);
+    }
 }
