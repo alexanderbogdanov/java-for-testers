@@ -66,4 +66,20 @@ public class TriangleTests {
         );
         assertEquals(expectedMessage, exception.getMessage());
     }
+
+    @Test
+    void testEquality() {
+        var t1 = new Triangle(3.0, 4.0, 5.0);
+        var t2 = new Triangle(3.0, 4.0, 5.0);
+        assertEquals(t1, t2);
+    }
+
+    @Test
+    void testEqualityForDifferentOrder() {
+        var t1 = new Triangle(3.0, 4.0, 5.0);
+        var t2 = new Triangle(4.0, 5.0, 3.0);
+        assertEquals(t1, t2);
+    }
+
+
 }
