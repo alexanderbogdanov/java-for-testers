@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CircleTests {
     Circle c = new Circle(5.0);
@@ -33,5 +32,26 @@ public class CircleTests {
                 () -> new Circle(radius)
         );
         assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void testEquality() {
+        var c1 = new Circle(5.0);
+        var c2 = new Circle(5.0);
+        assertEquals(c1, c2);
+    }
+
+    @Test
+    void testNonEquality() {
+        var c1 = new Circle(5.0);
+        var c2 = new Circle(4.0);
+        assertNotEquals(c1, c2);
+    }
+
+    @Test
+    void testHashCode() {
+        var c1 = new Circle(5.0);
+        var c2 = new Circle(5.0);
+        assertEquals(c1.hashCode(), c2.hashCode());
     }
 }

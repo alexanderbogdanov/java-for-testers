@@ -1,5 +1,7 @@
 package ru.stqa.geometry.figures;
 
+import java.util.Objects;
+
 import static java.lang.Math.PI;
 
 public record Circle(double radius) implements GeometricFigure {
@@ -29,4 +31,16 @@ public record Circle(double radius) implements GeometricFigure {
         return String.format("circle with a radius %.1f", this.radius);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Circle circle = (Circle) o;
+        return Double.compare(radius, circle.radius) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(radius);
+    }
 }

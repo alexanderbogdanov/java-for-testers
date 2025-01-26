@@ -39,6 +39,6 @@ public record Rectangle(double a, double b) implements GeometricFigure {
 
     @Override
     public int hashCode() {
-        return Objects.hash(a, b);
+        return Double.hashCode(a) + Double.hashCode(b);
     }
 }

@@ -53,4 +53,12 @@ public class RectangleTests {
         var r2 = new Rectangle(5.0, 3.0);
         assertEquals(r1, r2);
     }
+
+    @Test
+    void testNonEqualityDifferentDimensions() {
+        var r1 = new Rectangle(3.0, 5.0);
+        var r2 = new Rectangle(4.0, 6.0);
+        assertNotEquals(r1, r2);
+    }
+
 }

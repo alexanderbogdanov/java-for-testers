@@ -64,11 +64,4 @@ public class SquareTests {
         assertEquals("square with a side 5.0", s.describe());
     }
 
-    @Test
-    void testPass() {
-        var s1 = new Square(5.0);
-        var s2 = new Square(5.0);
-        assertTrue(s1.equals(s2));
-    }
-
 }
