@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TriangleTests {
 
@@ -62,7 +61,7 @@ public class TriangleTests {
         System.out.printf("Testing invalid triangle with sides: a=%.1f, b=%.1f, c=%.1f%n", a, b, c);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Triangle(a, b,c)
+                () -> new Triangle(a, b, c)
         );
         assertEquals(expectedMessage, exception.getMessage());
     }
@@ -79,6 +78,20 @@ public class TriangleTests {
         var t1 = new Triangle(3.0, 4.0, 5.0);
         var t2 = new Triangle(4.0, 5.0, 3.0);
         assertEquals(t1, t2);
+    }
+
+    @Test
+    void testNonEquality() {
+        var t1 = new Triangle(3.0, 4.0, 5.0);
+        var t2 = new Triangle(3.0, 3.0, 3.0);
+        assertNotEquals(t1, t2);
+    }
+
+    @Test
+    void testHashCode() {
+        var t1 = new Triangle(3.0, 4.0, 5.0);
+        var t2 = new Triangle(5.0, 3.0, 4.0);
+        assertEquals(t1.hashCode(), t2.hashCode());
     }
 
 
