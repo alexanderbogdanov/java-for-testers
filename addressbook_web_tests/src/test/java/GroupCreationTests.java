@@ -30,6 +30,7 @@ public class GroupCreationTests {
 
     }
 
+
     @Test
     public void testGroupCreation() {
         if (!isElementPresent(By.name("new"))) {
@@ -47,7 +48,7 @@ public class GroupCreationTests {
     }
 
     @Test
-    public void testGroupCreationWithEmptyName() {
+    public void testGroupCreationWithBlankFields() {
         if (!isElementPresent(By.name("new"))) {
             driver.findElement(By.linkText("groups")).click();
         }
@@ -73,4 +74,3 @@ public class GroupCreationTests {
 }
 
 
-//      driver.findElement(By.linkText("Logout")).click();
