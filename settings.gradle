@@ -1,4 +1,5 @@
 rootProject.name = 'java-for-testers'
 
-// Include the sandbox subproject
 include 'sandbox'
+include 'addressbook_web_tests'
+

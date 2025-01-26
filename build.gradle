@@ -20,7 +20,7 @@ subprojects {
     }
 
     tasks.named('test', Test) {
-        useJUnitPlatform() // Explicitly configure JUnit 5
-        classpath += configurations.testRuntimeClasspath // Ensure explicit test runtime configuration
+        useJUnitPlatform()
+        classpath += configurations.testRuntimeClasspath
     }
 }
