@@ -37,6 +37,17 @@ public class TestBase {
         }
     }
 
+    protected void openGroupsPage() {
+        if (!isElementPresent(By.name("new"))) {
+            driver.findElement(By.linkText("groups")).click();
+        }
+    }
+
+    protected boolean isGroupPresent() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+
     protected void createGroup(String group_name, String group_header, String group_footer) {
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
@@ -48,4 +59,12 @@ public class TestBase {
         driver.findElement(By.name("submit")).click();
         driver.findElement(By.linkText("group page")).click();
     }
+
+
+    protected static void deleteGroup() {
+        driver.findElement(By.name("selected[]")).click();
+        driver.findElement(By.name("delete")).click();
+        driver.findElement(By.linkText("group page")).click();
+    }
+
 }
