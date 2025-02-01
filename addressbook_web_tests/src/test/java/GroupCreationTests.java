@@ -13,7 +13,13 @@ public class GroupCreationTests extends TestBase {
     @Test
     public void testGroupCreationWithBlankFields() {
         openGroupsPage();
-        createGroup(new GroupData("", "", ""));
+        createGroup(new GroupData());
+    }
+
+    @Test
+    public void testGroupCreationWithNameOnly() {
+        openGroupsPage();
+        createGroup(new GroupData().withName("some name"));
     }
 
 }
