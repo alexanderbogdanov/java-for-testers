@@ -22,4 +22,15 @@ public class ContactCreationTests extends TestBase {
 
     }
 
+    @Test
+    public void testContactCreationWithBlankFields() {
+        app.contacts().createContact(new ContactData());
+    }
+
+    @Test
+   public void testContactCreationWithFirstNameOnly() {
+        app.contacts().createContact(new ContactData().withFirstName("Benedict"));
+    }
+
+
 }
