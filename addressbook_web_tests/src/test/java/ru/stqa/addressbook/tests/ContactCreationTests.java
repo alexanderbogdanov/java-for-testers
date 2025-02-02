@@ -1,7 +1,6 @@
 package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.ContactData;
 
 public class ContactCreationTests extends TestBase {
@@ -28,7 +27,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-   public void testContactCreationWithFirstNameOnly() {
+    public void testContactCreationWithFirstNameOnly() {
         app.contacts().createContact(new ContactData().withFirstName("Benedict"));
     }
 

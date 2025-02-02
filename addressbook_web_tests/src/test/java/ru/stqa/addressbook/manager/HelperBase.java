@@ -1,6 +1,7 @@
 package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 
 public class HelperBase {
@@ -25,6 +26,15 @@ public class HelperBase {
             manager.driver.findElement(locator);
             return true;
         } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    protected boolean isAlertPresent() {
+        try {
+            manager.driver.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException ex) {
             return false;
         }
     }

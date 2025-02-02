@@ -37,12 +37,31 @@ public class ContactHelper extends HelperBase {
     }
 
     private void gotoHomePage() {
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
 
+    public boolean isContactPresent() {
+        gotoHomePage();
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void deleteContact() {
+        gotoHomePage();
+        selectContact();
+        deleteSelectedContact();
+        gotoHomePage();
+    }
+
+    private void deleteSelectedContact() {
+        click(By.cssSelector("input[value='Delete']"));
+        if (isAlertPresent()) {
+            manager.driver.switchTo().alert().accept();
+        }
+    }
 
 
-
-
+    private void selectContact() {
+        click(By.name("selected[]"));
+    }
 }
