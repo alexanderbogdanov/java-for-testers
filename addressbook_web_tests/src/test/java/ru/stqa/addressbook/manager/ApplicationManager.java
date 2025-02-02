@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper sessionManager;
-    GroupHelper groups;
+    private GroupHelper groups;
 
     public void init() {
         if (driver == null) {
