@@ -1,4 +1,15 @@
 package ru.stqa.addressbook.tests;
 
-public class GroupModificationTests extends TestBase{
+import org.junit.jupiter.api.Test;
+import ru.stqa.addressbook.model.GroupData;
+
+public class GroupModificationTests extends TestBase {
+
+    @Test
+    void testGroupModification() {
+        if (!app.groups().isGroupPresent()) {
+            app.groups().createGroup(new GroupData("group name", "group header", "group footer"));
+        }
+        app.groups().modifyGroup(new GroupData().withName("modified name"));
+    }
 }

@@ -2,15 +2,7 @@ package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
 
-
-
 public class LoginHelper extends HelperBase {
-
-//    private final ApplicationManager manager;
-
-//    public LoginHelper(ApplicationManager manager) {
-//        this.manager = manager;
-//    }
 
     public LoginHelper(ApplicationManager manager) {
         super(manager);

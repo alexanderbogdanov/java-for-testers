@@ -1,15 +1,13 @@
 package ru.stqa.addressbook.manager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper sessionManager;
-    private GroupHelper groups;
+    GroupHelper groups;
 
     public void init() {
         if (driver == null) {
@@ -26,27 +24,18 @@ public class ApplicationManager {
     }
 
     public LoginHelper sessionManager() {
-        if(sessionManager == null) {
-            sessionManager =  new LoginHelper(this);
+        if (sessionManager == null) {
+            sessionManager = new LoginHelper(this);
         }
         return sessionManager;
     }
 
 
     public GroupHelper groups() {
-        if(groups == null) {
+        if (groups == null) {
             groups = new GroupHelper(this);
         }
         return groups;
-    }
-
-    protected boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
     }
 
 }
