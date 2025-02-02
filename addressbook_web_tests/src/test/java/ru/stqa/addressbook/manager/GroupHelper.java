@@ -1,7 +1,7 @@
-package manager;
+package ru.stqa.addressbook.manager;
 
-import model.GroupData;
 import org.openqa.selenium.By;
+import ru.stqa.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase {
 //    private final ApplicationManager manager;

@@ -1,7 +1,7 @@
-package tests;
+package ru.stqa.addressbook.tests;
 
-import model.GroupData;
 import org.junit.jupiter.api.Test;
+import ru.stqa.addressbook.model.GroupData;
 
 public class GroupDeletionTests extends TestBase {
 
