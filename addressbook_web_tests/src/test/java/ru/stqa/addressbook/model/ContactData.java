@@ -4,13 +4,13 @@ public record ContactData(String firstName, String lastName, String address, Str
                           String workPhone, String email, String email2, String email3) {
 
     public ContactData() {
-        this("", "", "", "", "", "", "", "", "");
+        this("","","", "", "", "", "", "", "");
     }
 
     public ContactData withFirstName(String firstName) {
         return new ContactData(firstName, this.lastName, this.address, this.homePhone, this.mobilePhone, this.workPhone, this.email, this.email2, this.email3);
-    }
 
+    }
     public ContactData withLastName(String lastName) {
         return new ContactData(this.firstName, lastName, this.address, this.homePhone, this.mobilePhone, this.workPhone, this.email, this.email2, this.email3);
     }
