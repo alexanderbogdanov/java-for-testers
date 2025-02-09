@@ -10,7 +10,7 @@ public class GroupDeletionTests extends TestBase {
 
     @Test
     public void testGroupDeletion() {
-        if (!app.groups().isGroupPresent()) {
+        if (app.groups().getCount() == 0) {
             app.groups().createGroup(new GroupData("group name", "group header", "group footer"));
         }
         int groupCount = app.groups().getCount();

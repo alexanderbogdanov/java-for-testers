@@ -15,11 +15,6 @@ public class GroupHelper extends HelperBase {
         }
     }
 
-    public boolean isGroupPresent() {
-        openGroupsPage();
-        return isElementPresent(By.name("selected[]"));
-    }
-
     public void createGroup(GroupData group) {
         openGroupsPage();
         initGroupCreation();
