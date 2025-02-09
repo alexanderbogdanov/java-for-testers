@@ -3,6 +3,9 @@ package ru.stqa.addressbook.manager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
@@ -11,19 +14,28 @@ public class HelperBase {
         this.manager = manager;
     }
 
+    protected WebElement find(By locator) {
+        return manager.driver.findElement(locator);
+    }
+
+    protected List<WebElement> findElements(By locator) {
+        return manager.driver.findElements(locator);
+    }
+
+
     protected void click(By locator) {
-        manager.driver.findElement(locator).click();
+        find(locator).click();
     }
 
     protected void type(By locator, String text) {
-        manager.driver.findElement(locator).clear();
+        find(locator).clear();
         click(locator);
-        manager.driver.findElement(locator).sendKeys(text);
+        find(locator).sendKeys(text);
     }
 
     protected boolean isElementPresent(By locator) {
         try {
-            manager.driver.findElement(locator);
+            find(locator);
             return true;
         } catch (NoSuchElementException ex) {
             return false;
