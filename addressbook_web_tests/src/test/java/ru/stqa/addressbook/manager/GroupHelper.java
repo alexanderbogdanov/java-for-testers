@@ -26,7 +26,7 @@ public class GroupHelper extends HelperBase {
     public void deleteGroup() {
         openGroupsPage();
         selectGroup();
-        deleteSelectedGroup();
+        deleteSelectedGroups();
         returnToGroupsPage();
     }
 
@@ -65,8 +65,15 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    private void deleteSelectedGroup() {
+    private void deleteSelectedGroups() {
         click(By.name("delete"));
+
+    }
+
+    public void deleteAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        deleteSelectedGroups();
     }
 
     private void returnToGroupsPage() {
@@ -77,5 +84,12 @@ public class GroupHelper extends HelperBase {
     public int getCount() {
         openGroupsPage();
         return findElements(By.name("selected[]")).size();
+    }
+
+    private void selectAllGroups() {
+        var checkboxes = findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
     }
 }

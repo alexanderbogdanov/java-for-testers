@@ -19,6 +19,15 @@ public class GroupDeletionTests extends TestBase {
         assertEquals(groupCount - 1, newGroupCount);
     }
 
+    @Test
+    void testAllGroupsDeletion() {
+        if (app.groups().getCount() == 0) {
+            app.groups().createGroup(new GroupData("group name", "group header", "group footer"));
+        }
+        app.groups().deleteAllGroups();
+        assertEquals(0, app.groups().getCount());
+    }
+
 }
 
 
