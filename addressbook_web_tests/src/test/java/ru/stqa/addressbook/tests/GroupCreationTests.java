@@ -1,6 +1,5 @@
 package ru.stqa.addressbook.tests;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.GroupData;
@@ -14,12 +13,14 @@ public class GroupCreationTests extends TestBase {
 
 
     public static List<GroupData> groupProvider() {
-        var result = new ArrayList<GroupData>(List.of(
-                new GroupData(),
-                new GroupData().withName("some name"),
-                new GroupData("group name", "group header", "group footer"),
-                new GroupData("group name 2", "group header 2", "group footer 2"),
-                new GroupData("group name 3", "group header 3", "group footer 3")));
+        var result = new ArrayList<GroupData>();
+        for (var name : List.of("", "group name")) {
+            for (var header : List.of("", "group header")) {
+                for (var footer : List.of("", "group footer")) {
+                    result.add(new GroupData(name, header, footer));
+                }
+            }
+        }
         for (int i = 0; i < 5; i++) {
             result.add(new GroupData(randomString(i * 10), randomString(i * 10), randomString(i * 10)));
         }
@@ -33,6 +34,20 @@ public class GroupCreationTests extends TestBase {
         app.groups().createGroup(group);
         int newGroupCount = app.groups().getCount();
         assertEquals(groupCount + 1, newGroupCount);
+    }
+
+    public static List<GroupData> NegativeGroupProvider() {
+        return new ArrayList<>(List.of(
+                new GroupData("group name'", "", "")));
+    }
+
+    @ParameterizedTest
+    @MethodSource("NegativeGroupProvider")
+    public void testGroupCreationFail(GroupData group) {
+        int groupCount = app.groups().getCount();
+        app.groups().createGroup(group);
+        int newGroupCount = app.groups().getCount();
+        assertEquals(groupCount, newGroupCount);
     }
 
 }
