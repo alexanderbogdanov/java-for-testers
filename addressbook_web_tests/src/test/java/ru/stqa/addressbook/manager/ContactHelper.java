@@ -51,7 +51,7 @@ public class ContactHelper extends HelperBase {
     }
 
     private void deleteSelectedContact() {
-        click(By.cssSelector("input[value='Delete']"));
+        deleteSelected();
         if (isAlertPresent()) {
             manager.driver.switchTo().alert().accept();
         }
@@ -64,11 +64,17 @@ public class ContactHelper extends HelperBase {
 
     public void deleteAllContacts() {
         gotoHomePage();
-        click(By.id("MassCB"));
-        click(By.cssSelector("input[value='Delete']"));
+        selectAllContacts();
+        deleteSelected();
         if (isAlertPresent()) {
             manager.driver.switchTo().alert().accept();
         }
 
     }
+
+    private void selectAllContacts() {
+        click(By.id("MassCB"));
+    }
+
+
 }

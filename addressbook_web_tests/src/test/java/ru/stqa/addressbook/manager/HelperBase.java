@@ -54,4 +54,9 @@ public class HelperBase {
     protected void confirmAction() {
         click(By.name("submit"));
     }
+
+    protected void deleteSelected() {
+        click(By.xpath("//input[starts-with(@value, 'Delete')]"));
+
+    }
 }
