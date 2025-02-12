@@ -50,4 +50,8 @@ public class HelperBase {
             return false;
         }
     }
+
+    protected void confirmAction() {
+        click(By.name("submit"));
+    }
 }

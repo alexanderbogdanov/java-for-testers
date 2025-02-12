@@ -19,7 +19,7 @@ public class GroupHelper extends HelperBase {
         openGroupsPage();
         initGroupCreation();
         fillGroupForm(group);
-        submitGroupCreation();
+        confirmAction();
         returnToGroupsPage();
     }
 
@@ -57,9 +57,6 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_footer"), group.footer());
     }
 
-    private void submitGroupCreation() {
-        click(By.name("submit"));
-    }
 
     private void submitGroupModification() {
         click(By.name("update"));

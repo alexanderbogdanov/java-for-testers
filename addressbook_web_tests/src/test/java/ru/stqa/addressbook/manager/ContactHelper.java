@@ -12,7 +12,7 @@ public class ContactHelper extends HelperBase {
     public void createContact(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
-        submitContactCreation();
+        confirmAction();
         gotoHomePage();
     }
 
@@ -32,9 +32,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contact.email3());
     }
 
-    private void submitContactCreation() {
-        click(By.name("submit"));
-    }
 
     private void gotoHomePage() {
         click(By.linkText("home"));
@@ -63,5 +60,10 @@ public class ContactHelper extends HelperBase {
 
     private void selectContact() {
         click(By.name("selected[]"));
+    }
+
+    public void deleteAllContacts() {
+        gotoHomePage();
+
     }
 }
