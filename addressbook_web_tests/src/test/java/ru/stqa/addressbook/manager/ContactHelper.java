@@ -64,6 +64,11 @@ public class ContactHelper extends HelperBase {
 
     public void deleteAllContacts() {
         gotoHomePage();
+        click(By.id("MassCB"));
+        click(By.cssSelector("input[value='Delete']"));
+        if (isAlertPresent()) {
+            manager.driver.switchTo().alert().accept();
+        }
 
     }
 }
