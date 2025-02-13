@@ -14,7 +14,7 @@ public class ContactCreationTests extends TestBase {
     public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>();
 
-        result.add(new ContactData("Benedict", "Cumberbatch", "221B Baker Street",
+        result.add(new ContactData("", "Benedict", "Cumberbatch", "221B Baker Street",
                 "+44 20 7900 9000", "+44 7700 900900", "+44 20 7946 0000",
                 "benedict@example.com", "ben.c@example.net", "benny@example.co.uk"));
 
@@ -26,7 +26,7 @@ public class ContactCreationTests extends TestBase {
 
         for (int i = 1; i <= 5; i++) {
             result.add(new ContactData(
-                    randomString(5), randomString(5), randomString(10),
+                    "", randomString(5), randomString(5), randomString(10),
                     randomString(10), randomString(10), randomString(10),
                     randomString(10), randomString(10), randomString(10)
             ));
@@ -48,7 +48,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> NegativeContactProvider() {
         return new ArrayList<>(List.of(
-                new ContactData("", "last name'", "",
+                new ContactData("", "", "last name'", "",
                         "", "", "", "", "", "")));
     }
 

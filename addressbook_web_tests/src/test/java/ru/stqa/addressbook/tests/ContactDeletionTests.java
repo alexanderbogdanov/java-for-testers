@@ -11,7 +11,7 @@ public class ContactDeletionTests extends TestBase {
     public void testContactDeletion() {
         if (!app.contacts().isContactPresent()) {
             app.contacts().createContact(new ContactData(
-                    "Benedict",
+                    "", "Benedict",
                     "Cumberbatch",
                     "221B Baker Street, London, NW1 6XE",
                     "+44 20 7900 9000",
@@ -31,7 +31,7 @@ public class ContactDeletionTests extends TestBase {
     public void testAllContactsDeletion() {
         if (!app.contacts().isContactPresent()) {
             app.contacts().createContact(new ContactData(
-                    "Benedict",
+                    "", "Benedict",
                     "Cumberbatch",
                     "221B Baker Street, London, NW1 6XE",
                     "+44 20 7900 9000",
