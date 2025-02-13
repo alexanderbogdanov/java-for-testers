@@ -57,6 +57,8 @@ public class HelperBase {
 
     protected void deleteSelected() {
         click(By.xpath("//input[starts-with(@value, 'Delete')]"));
-
+        if (isAlertPresent()) {
+            manager.driver.switchTo().alert().accept();
+        }
     }
 }

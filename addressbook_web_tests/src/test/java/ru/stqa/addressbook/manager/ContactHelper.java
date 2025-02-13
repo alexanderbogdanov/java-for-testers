@@ -46,15 +46,8 @@ public class ContactHelper extends HelperBase {
     public void deleteContact() {
         gotoHomePage();
         selectContact();
-        deleteSelectedContact();
-        gotoHomePage();
-    }
-
-    private void deleteSelectedContact() {
         deleteSelected();
-        if (isAlertPresent()) {
-            manager.driver.switchTo().alert().accept();
-        }
+        gotoHomePage();
     }
 
 
@@ -66,10 +59,6 @@ public class ContactHelper extends HelperBase {
         gotoHomePage();
         selectAllContacts();
         deleteSelected();
-        if (isAlertPresent()) {
-            manager.driver.switchTo().alert().accept();
-        }
-
     }
 
     private void selectAllContacts() {
