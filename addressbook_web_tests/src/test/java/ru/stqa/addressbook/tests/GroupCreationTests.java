@@ -41,7 +41,7 @@ public class GroupCreationTests extends TestBase {
 
     public static List<GroupData> NegativeGroupProvider() {
         return new ArrayList<>(List.of(
-                new GroupData("", "group name'", "", "")));
+                new GroupData().withName("group name'").withHeader("").withFooter("")));
     }
 
     @ParameterizedTest
