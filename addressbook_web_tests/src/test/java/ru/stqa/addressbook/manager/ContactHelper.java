@@ -8,7 +8,6 @@ public class ContactHelper extends HelperBase {
         super(manager);
     }
 
-
     public void createContact(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
@@ -60,6 +59,12 @@ public class ContactHelper extends HelperBase {
         selectAllContacts();
         deleteSelected();
     }
+
+    public int getCount() {
+        gotoHomePage();
+        return findElements(By.name("selected[]")).size();
+    }
+
 
     private void selectAllContacts() {
         click(By.id("MassCB"));

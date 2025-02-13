@@ -31,5 +31,4 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(new ContactData().withFirstName("Benedict"));
     }
 
-
 }

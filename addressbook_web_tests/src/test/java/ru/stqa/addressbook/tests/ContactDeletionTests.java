@@ -3,6 +3,8 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ContactDeletionTests extends TestBase {
 
     @Test
@@ -19,7 +21,10 @@ public class ContactDeletionTests extends TestBase {
                     "ben.cumberbatch@example.net",
                     "benny.cumberbatch@example.co.uk"));
         }
+        int contactCount = app.contacts().getCount();
         app.contacts().deleteContact();
+        int newContactCount = app.contacts().getCount();
+        assertEquals(contactCount - 1, newContactCount);
     }
 
     @Test
@@ -37,5 +42,6 @@ public class ContactDeletionTests extends TestBase {
                     "benny.cumberbatch@example.co.uk"));
         }
         app.contacts().deleteAllContacts();
+        assertEquals(0, app.contacts().getCount());
     }
 }
