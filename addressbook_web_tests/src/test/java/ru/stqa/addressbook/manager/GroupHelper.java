@@ -3,6 +3,9 @@ package ru.stqa.addressbook.manager;
 import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GroupHelper extends HelperBase {
 
     public GroupHelper(ApplicationManager manager) {
@@ -23,24 +26,25 @@ public class GroupHelper extends HelperBase {
         returnToGroupsPage();
     }
 
-    public void deleteGroup() {
+    public void deleteGroup(GroupData group) {
         openGroupsPage();
-        selectGroup();
+        selectGroup(group);
         deleteSelected();
         returnToGroupsPage();
     }
 
     public void modifyGroup(GroupData modifiedGroup) {
         openGroupsPage();
-        selectGroup();
+        selectGroup(null);
         initGroupModification();
         fillGroupForm(modifiedGroup);
         submitGroupModification();
         returnToGroupsPage();
     }
 
-    private void selectGroup() {
-        click(By.name("selected[]"));
+    private void selectGroup(GroupData group) {
+//        click(By.name("selected[]"));
+        click(By.cssSelector(String.format("input[value='%s']", group.id())));
     }
 
     private void initGroupCreation() {
@@ -83,5 +87,17 @@ public class GroupHelper extends HelperBase {
         for (var checkbox : checkboxes) {
             checkbox.click();
         }
+    }
+
+    public List<GroupData> getAll() {
+        var groups = new ArrayList<GroupData>();
+        openGroupsPage();
+        var elements = findElements(By.cssSelector("span.group"));
+        for (var element : elements) {
+            var name = element.getText();
+            var id = element.findElement(By.name("selected[]")).getDomAttribute("value");
+            groups.add(new GroupData().withId(id).withName(name));
+        }
+        return groups;
     }
 }
