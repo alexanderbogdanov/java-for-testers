@@ -3,6 +3,9 @@ package ru.stqa.addressbook.manager;
 import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper extends HelperBase {
     public ContactHelper(ApplicationManager manager) {
         super(manager);
@@ -71,4 +74,17 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public List<ContactData> getAll() {
+        var contacts = new ArrayList<ContactData>();
+        gotoHomePage();
+        var rows = findElements(By.name("entry"));
+        for (var row : rows) {
+            var cells = row.findElements(By.tagName("td"));
+            var id = cells.get(0).findElement(By.tagName("input")).getDomAttribute("id");
+            var lastName = cells.get(1).getText();
+            var firstName = cells.get(2).getText();
+            contacts.add(new ContactData().withId(id).withLastName(lastName).withFirstName(firstName));
+        }
+        return contacts;
+    }
 }

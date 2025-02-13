@@ -3,13 +3,15 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        if (!app.contacts().isContactPresent()) {
+        if (app.contacts().getCount() == 0) {
             app.contacts().createContact(new ContactData(
                     "", "Benedict",
                     "Cumberbatch",
@@ -21,6 +23,7 @@ public class ContactDeletionTests extends TestBase {
                     "ben.cumberbatch@example.net",
                     "benny.cumberbatch@example.co.uk"));
         }
+        List<ContactData> contactsBefore = app.contacts().getAll();
         int contactCount = app.contacts().getCount();
         app.contacts().deleteContact();
         int newContactCount = app.contacts().getCount();

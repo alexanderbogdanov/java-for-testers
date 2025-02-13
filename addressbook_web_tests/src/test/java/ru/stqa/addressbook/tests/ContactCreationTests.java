@@ -14,23 +14,36 @@ public class ContactCreationTests extends TestBase {
     public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>();
 
-        result.add(new ContactData("", "Benedict", "Cumberbatch", "221B Baker Street",
-                "+44 20 7900 9000", "+44 7700 900900", "+44 20 7946 0000",
-                "benedict@example.com", "ben.c@example.net", "benny@example.co.uk"));
+        result.add(new ContactData()
+                        .withFirstName("Benedict")
+                        .withLastName("Cumberbatch")
+                        .withAddress("221B Baker Street")
+                        .withHomePhone("+44 20 7900 9000")
+                        .withMobilePhone("+44 7700 900900")
+                        .withWorkPhone("+44 20 7946 0000")
+                        .withEmail("benedict@example.com")
+                        .withEmail2("ben.c@example.net")
+                        .withEmail3("benny@example.co.uk"));
 
         result.add(new ContactData());
-
         result.add(new ContactData().withFirstName("John"));
         result.add(new ContactData().withLastName("Doe"));
         result.add(new ContactData().withEmail("johndoe@example.com"));
 
-        for (int i = 1; i <= 5; i++) {
-            result.add(new ContactData(
-                    "", randomString(5), randomString(5), randomString(10),
-                    randomString(10), randomString(10), randomString(10),
-                    randomString(10), randomString(10), randomString(10)
-            ));
+        for (int i = 0; i < 5; i++) {
+            result.add(new ContactData()
+                    .withFirstName(randomString(i * 5))
+                    .withLastName(randomString(i * 5))
+                    .withAddress(randomString(i * 10))
+                    .withHomePhone(randomString(i * 10))
+                    .withMobilePhone(randomString(i * 10))
+                    .withWorkPhone(randomString(i * 10))
+                    .withEmail(randomString(i * 10))
+                    .withEmail2(randomString(i * 10))
+                    .withEmail3(randomString(i * 10))
+            );
         }
+
 
         return result;
     }
