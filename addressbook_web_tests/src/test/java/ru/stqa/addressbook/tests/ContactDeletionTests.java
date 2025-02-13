@@ -3,7 +3,9 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,10 +26,12 @@ public class ContactDeletionTests extends TestBase {
                     "benny.cumberbatch@example.co.uk"));
         }
         List<ContactData> contactsBefore = app.contacts().getAll();
-        int contactCount = app.contacts().getCount();
-        app.contacts().deleteContact();
-        int newContactCount = app.contacts().getCount();
-        assertEquals(contactCount - 1, newContactCount);
+        var index =  new Random().nextInt(contactsBefore.size());
+        app.contacts().deleteContact(contactsBefore.get(index));
+        List<ContactData> contactsAfter = app.contacts().getAll();
+        List<ContactData> expectedContacts = new ArrayList<>(contactsBefore);
+        expectedContacts.remove(index);
+        assertEquals(expectedContacts, contactsAfter);
     }
 
     @Test

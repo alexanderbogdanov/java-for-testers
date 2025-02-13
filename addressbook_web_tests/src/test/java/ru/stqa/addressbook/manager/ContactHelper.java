@@ -45,16 +45,18 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void deleteContact() {
+    public void deleteContact(ContactData contact) {
         gotoHomePage();
-        selectContact();
+        selectContact(contact);
         deleteSelected();
         gotoHomePage();
     }
 
 
-    private void selectContact() {
-        click(By.name("selected[]"));
+    private void selectContact(ContactData contact) {
+//        click(By.name("selected[]"));
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+
     }
 
     public void deleteAllContacts() {
