@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,11 +34,19 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("groupProvider")
     public void testMultipleGroupCreation(GroupData group) {
-        int groupCount = app.groups().getCount();
+        var groupsBefore = app.groups().getAll();
         app.groups().createGroup(group);
-        int newGroupCount = app.groups().getCount();
-        assertEquals(groupCount + 1, newGroupCount);
+        var groupsAfter = app.groups().getAll();
+        Comparator<GroupData> compareById = (g1, g2) -> {
+            return Integer.compare(Integer.parseInt(g1.id()), Integer.parseInt(g2.id()));
+        };
+        groupsAfter.sort(compareById);
+        var expectedGroups = new ArrayList<>(groupsBefore);
+        expectedGroups.add(group.withId(groupsAfter.get(groupsAfter.size() - 1).id()).withHeader("").withFooter(""));
+        expectedGroups.sort(compareById);
+        assertEquals(groupsAfter, expectedGroups);
     }
+
 
     public static List<GroupData> NegativeGroupProvider() {
         return new ArrayList<>(List.of(

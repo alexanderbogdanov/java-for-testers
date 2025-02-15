@@ -89,8 +89,8 @@ public class GroupHelper extends HelperBase {
     }
 
     public List<GroupData> getAll() {
-        var groups = new ArrayList<GroupData>();
         openGroupsPage();
+        var groups = new ArrayList<GroupData>();
         var elements = findElements(By.cssSelector("span.group"));
         for (var element : elements) {
             var name = element.getText();
