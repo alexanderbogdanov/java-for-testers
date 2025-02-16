@@ -1,10 +1,11 @@
 package ru.stqa.addressbook.model;
 
-public record ContactData(String id, String firstName, String lastName, String address, String homePhone, String mobilePhone,
+public record ContactData(String id, String firstName, String lastName, String address, String homePhone,
+                          String mobilePhone,
                           String workPhone, String email, String email2, String email3) {
 
     public ContactData() {
-        this("", "","","", "", "", "", "", "", "");
+        this("", "", "", "", "", "", "", "", "", "");
     }
 
     public ContactData withId(String id) {
@@ -15,6 +16,7 @@ public record ContactData(String id, String firstName, String lastName, String a
         return new ContactData(this.id, firstName, this.lastName, this.address, this.homePhone, this.mobilePhone, this.workPhone, this.email, this.email2, this.email3);
 
     }
+
     public ContactData withLastName(String lastName) {
         return new ContactData(this.id, this.firstName, lastName, this.address, this.homePhone, this.mobilePhone, this.workPhone, this.email, this.email2, this.email3);
     }

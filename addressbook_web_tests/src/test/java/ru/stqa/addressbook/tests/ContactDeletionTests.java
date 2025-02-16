@@ -26,7 +26,7 @@ public class ContactDeletionTests extends TestBase {
                     "benny.cumberbatch@example.co.uk"));
         }
         List<ContactData> contactsBefore = app.contacts().getAll();
-        var index =  new Random().nextInt(contactsBefore.size());
+        var index = new Random().nextInt(contactsBefore.size());
         app.contacts().deleteContact(contactsBefore.get(index));
         List<ContactData> contactsAfter = app.contacts().getAll();
         List<ContactData> expectedContacts = new ArrayList<>(contactsBefore);
