@@ -37,9 +37,7 @@ public class GroupCreationTests extends TestBase {
         var groupsBefore = app.groups().getAll();
         app.groups().createGroup(group);
         var groupsAfter = app.groups().getAll();
-        Comparator<GroupData> compareById = (g1, g2) -> {
-            return Integer.compare(Integer.parseInt(g1.id()), Integer.parseInt(g2.id()));
-        };
+        Comparator<GroupData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
         groupsAfter.sort(compareById);
         var expectedGroups = new ArrayList<>(groupsBefore);
         expectedGroups.add(group.withId(groupsAfter.get(groupsAfter.size() - 1).id()).withHeader("").withFooter(""));

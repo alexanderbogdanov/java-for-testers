@@ -15,15 +15,15 @@ public class ContactCreationTests extends TestBase {
         var result = new ArrayList<ContactData>();
 
         result.add(new ContactData()
-                        .withFirstName("Benedict")
-                        .withLastName("Cumberbatch")
-                        .withAddress("221B Baker Street")
-                        .withHomePhone("+44 20 7900 9000")
-                        .withMobilePhone("+44 7700 900900")
-                        .withWorkPhone("+44 20 7946 0000")
-                        .withEmail("benedict@example.com")
-                        .withEmail2("ben.c@example.net")
-                        .withEmail3("benny@example.co.uk"));
+                .withFirstName("Benedict")
+                .withLastName("Cumberbatch")
+                .withAddress("221B Baker Street")
+                .withHomePhone("+44 20 7900 9000")
+                .withMobilePhone("+44 7700 900900")
+                .withWorkPhone("+44 20 7946 0000")
+                .withEmail("benedict@example.com")
+                .withEmail2("ben.c@example.net")
+                .withEmail3("benny@example.co.uk"));
 
         result.add(new ContactData());
         result.add(new ContactData().withFirstName("John"));
