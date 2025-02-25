@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,12 +53,27 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void testMultipleContactCreation(ContactData contact) {
-        int contactCount = app.contacts().getCount();
+        var contactsBefore = app.contacts().getAll();
         app.contacts().createContact(contact);
-        int newContactCount = app.contacts().getCount();
-        assertEquals(contactCount + 1, newContactCount);
-    }
+        var contactsAfter = app.contacts().getAll();
+        Comparator<ContactData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
+        contactsAfter.sort(compareById);
+        var expectedContacts = new ArrayList<>(contactsBefore);
+        expectedContacts.add(contact
+                .withId(contactsAfter.get(contactsAfter.size() - 1).id())
+                .withLastName(contactsAfter.get(contactsAfter.size() - 1).lastName())
+                .withFirstName(contactsAfter.get(contactsAfter.size() - 1).firstName())
+                .withAddress("")
+                .withEmail("")
+                .withEmail2("")
+                .withEmail3("")
+                .withHomePhone("")
+                .withMobilePhone("")
+                .withWorkPhone(""));
+        expectedContacts.sort(compareById);
+        assertEquals(contactsAfter, expectedContacts);
 
+    }
 
     public static List<ContactData> NegativeContactProvider() {
         return new ArrayList<>(List.of(
@@ -68,10 +84,10 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("NegativeContactProvider")
     public void testContactCreationFail(ContactData contact) {
-        int contactCount = app.contacts().getCount();
+        var contactsBefore = app.contacts().getAll();
         app.contacts().createContact(contact);
-        int newContactCount = app.contacts().getCount();
-        assertEquals(contactCount, newContactCount);
+        var contactsAfter = app.contacts().getAll();
+        assertEquals(contactsAfter, contactsBefore);
     }
 
 }

@@ -54,7 +54,6 @@ public class ContactHelper extends HelperBase {
 
 
     private void selectContact(ContactData contact) {
-//        click(By.name("selected[]"));
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
 
     }
@@ -80,13 +79,22 @@ public class ContactHelper extends HelperBase {
         var contacts = new ArrayList<ContactData>();
         gotoHomePage();
         var rows = findElements(By.name("entry"));
+
         for (var row : rows) {
             var cells = row.findElements(By.tagName("td"));
-            var id = cells.get(0).findElement(By.tagName("input")).getDomAttribute("id");
-            var lastName = cells.get(1).getText();
-            var firstName = cells.get(2).getText();
-            contacts.add(new ContactData().withId(id).withLastName(lastName).withFirstName(firstName));
+
+            var id = cells.get(0).findElement(By.tagName("input")).getDomAttribute("value");
+            var lastName = cells.get(1).getText().trim();
+            var firstName = cells.get(2).getText().trim();
+
+            contacts.add(new ContactData()
+                    .withId(id)
+                    .withFirstName(firstName)
+                    .withLastName(lastName));
         }
+
         return contacts;
     }
+
+
 }
