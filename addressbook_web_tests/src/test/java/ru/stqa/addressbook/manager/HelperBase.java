@@ -4,11 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
+
+    public static final int DEFAULT_WAIT_SECONDS = 10;
 
     public HelperBase(ApplicationManager manager) {
         this.manager = manager;
@@ -31,6 +36,15 @@ public class HelperBase {
         find(locator).clear();
         click(locator);
         find(locator).sendKeys(text);
+    }
+
+    protected void waitForElement(By locator, int timeoutSeconds) {
+        new WebDriverWait(manager.driver, Duration.ofSeconds(timeoutSeconds)).until(
+                ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    protected void waitForElement(By locator) {
+        waitForElement(locator, DEFAULT_WAIT_SECONDS);
     }
 
     protected boolean isElementPresent(By locator) {
@@ -61,4 +75,9 @@ public class HelperBase {
             manager.driver.switchTo().alert().accept();
         }
     }
+
+    protected void submitChanges() {
+        click(By.name("update"));
+    }
+
 }

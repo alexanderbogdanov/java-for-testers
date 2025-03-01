@@ -5,6 +5,7 @@ import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ContactHelper extends HelperBase {
     public ContactHelper(ApplicationManager manager) {
@@ -37,12 +38,21 @@ public class ContactHelper extends HelperBase {
 
     private void gotoHomePage() {
         click(By.linkText("home"));
+        waitForElement(By.name("entry"));
     }
 
 
     public boolean isContactPresent() {
         gotoHomePage();
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public ContactData getRandomContact() {
+        List<ContactData> contacts = getAll();
+        if (contacts.isEmpty()) {
+            throw new IllegalStateException("No contacts available to select randomly.");
+        }
+        return contacts.get(new Random().nextInt(contacts.size()));
     }
 
     public void deleteContact(ContactData contact) {
@@ -96,5 +106,28 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        gotoHomePage();
+        initContactModification(contact);
+        fillContactForm(modifiedContact);
+        submitChanges();
+        gotoHomePage();
+    }
+
+    private void initContactModification(ContactData contact) {
+        var rows = findElements(By.name("entry"));
+        for (var row : rows) {
+            var cells = row.findElements(By.tagName("td"));
+            var idElement = cells.get(0).findElement(By.tagName("input"));
+            var id = idElement.getDomAttribute("value");
+            if (id == null || id.isEmpty()) {
+                continue;
+            }
+            if (id.equals(contact.id())) {
+                cells.get(7).findElement(By.cssSelector(".center img[alt='Edit']")).click();
+                break;
+            }
+        }
+    }
 
 }

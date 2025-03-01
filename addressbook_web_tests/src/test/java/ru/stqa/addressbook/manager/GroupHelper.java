@@ -38,7 +38,7 @@ public class GroupHelper extends HelperBase {
         selectGroup(group);
         initGroupModification();
         fillGroupForm(modifiedGroup);
-        submitGroupModification();
+        submitChanges();
         returnToGroupsPage();
     }
 
@@ -60,10 +60,6 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_footer"), group.footer());
     }
 
-
-    private void submitGroupModification() {
-        click(By.name("update"));
-    }
 
     public void deleteAllGroups() {
         openGroupsPage();
