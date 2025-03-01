@@ -26,7 +26,8 @@ public class ContactModificationTests extends TestBase {
                 .withId(contactToModify.id())
                 .withLastName(contactToModify.lastName());
         app.contacts().modifyContact(contactToModify, testData);
-        var contactsAfter = app.contacts().getAll();int index = contactsBefore.indexOf(contactToModify);
+        var contactsAfter = app.contacts().getAll();
+        int index = contactsBefore.indexOf(contactToModify);
         var expectedContacts = new ArrayList<>(contactsBefore);
         expectedContacts.set(index, testData.withId(contactToModify.id()));
         Comparator<ContactData> compareById = (c1, c2) -> {
