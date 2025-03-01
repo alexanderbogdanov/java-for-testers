@@ -21,7 +21,8 @@ public class ContactModificationTests extends TestBase {
 
         var contactsBefore = app.contacts().getAll();
         var contactToModify = app.contacts().getRandomContact();
-        var newFirstName = "modified_" + randomString(5);var testData = new ContactData()
+        var newFirstName = "modified_" + randomString(5);
+        var testData = new ContactData()
                 .withFirstName(newFirstName)
                 .withId(contactToModify.id())
                 .withLastName(contactToModify.lastName());
