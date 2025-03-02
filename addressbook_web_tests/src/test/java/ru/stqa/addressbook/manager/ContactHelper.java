@@ -33,12 +33,15 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contact.email());
         type(By.name("email2"), contact.email2());
         type(By.name("email3"), contact.email3());
+        if (contact.photo() != null && !contact.photo().isEmpty()) {
+            uploadFile(By.name("photo"), contact.photo());
+        }
     }
 
 
     private void gotoHomePage() {
         click(By.linkText("home"));
-        waitForElement(By.name("entry"));
+        waitForElement(By.id("maintable"));
     }
 
 

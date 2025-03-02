@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class HelperBase {
         click(locator);
         find(locator).sendKeys(text);
     }
+
 
     protected void waitForElement(By locator, int timeoutSeconds) {
         new WebDriverWait(manager.driver, Duration.ofSeconds(timeoutSeconds)).until(
@@ -78,6 +80,10 @@ public class HelperBase {
 
     protected void submitChanges() {
         click(By.name("update"));
+    }
+
+    protected void uploadFile(By locator, String file) {
+        find(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 
 }

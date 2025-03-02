@@ -3,6 +3,8 @@ package ru.stqa.addressbook.tests;
 import ru.stqa.addressbook.manager.ApplicationManager;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Random;
 
 public class TestBase {
@@ -23,6 +25,16 @@ public class TestBase {
             result.append((char) (rnd.nextInt(26) + 'a'));
         }
         return result.toString();
+    }
+
+    public static String getRandomImagePath(String dir) {
+        var fileNames = new File(dir).list();
+        if (fileNames == null || fileNames.length == 0) {
+            throw new IllegalStateException("No files found in directory: " + dir);
+        }
+        var rnd = new Random();
+        var index = rnd.nextInt(fileNames.length);
+        return Paths.get(dir, fileNames[index]).toString();
     }
 
 }

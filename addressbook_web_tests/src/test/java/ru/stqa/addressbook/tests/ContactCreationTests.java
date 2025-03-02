@@ -24,12 +24,14 @@ public class ContactCreationTests extends TestBase {
                 .withWorkPhone("+44 20 7946 0000")
                 .withEmail("benedict@example.com")
                 .withEmail2("ben.c@example.net")
-                .withEmail3("benny@example.co.uk"));
+                .withEmail3("benny@example.co.uk")
+                .withPhoto(getRandomImagePath("src/test/resources/images/")));
 
         result.add(new ContactData());
         result.add(new ContactData().withFirstName("John"));
         result.add(new ContactData().withLastName("Doe"));
         result.add(new ContactData().withEmail("johndoe@example.com"));
+        result.add(new ContactData().withPhoto(getRandomImagePath("src/test/resources/images/")));
 
         for (int i = 0; i < 5; i++) {
             result.add(new ContactData()
@@ -42,9 +44,9 @@ public class ContactCreationTests extends TestBase {
                     .withEmail(randomString(i * 10))
                     .withEmail2(randomString(i * 10))
                     .withEmail3(randomString(i * 10))
+                    .withPhoto(getRandomImagePath("src/test/resources/images/"))
             );
         }
-
 
         return result;
     }
@@ -69,7 +71,8 @@ public class ContactCreationTests extends TestBase {
                 .withEmail3("")
                 .withHomePhone("")
                 .withMobilePhone("")
-                .withWorkPhone(""));
+                .withWorkPhone("")
+                .withPhoto(""));
         expectedContacts.sort(compareById);
         assertEquals(contactsAfter, expectedContacts);
 
@@ -78,7 +81,7 @@ public class ContactCreationTests extends TestBase {
     public static List<ContactData> NegativeContactProvider() {
         return new ArrayList<>(List.of(
                 new ContactData("", "", "last name'", "",
-                        "", "", "", "", "", "")));
+                        "", "", "", "", "", "", "")));
     }
 
     @ParameterizedTest

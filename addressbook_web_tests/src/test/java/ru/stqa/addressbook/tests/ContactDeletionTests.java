@@ -23,7 +23,8 @@ public class ContactDeletionTests extends TestBase {
                     "+44 20 7946 0000",
                     "benedict.cumberbatch@example.com",
                     "ben.cumberbatch@example.net",
-                    "benny.cumberbatch@example.co.uk"));
+                    "benny.cumberbatch@example.co.uk",
+                    ""));
         }
         List<ContactData> contactsBefore = app.contacts().getAll();
         var index = new Random().nextInt(contactsBefore.size());
@@ -46,7 +47,8 @@ public class ContactDeletionTests extends TestBase {
                     "+44 20 7946 0000",
                     "benedict.cumberbatch@example.com",
                     "ben.cumberbatch@example.net",
-                    "benny.cumberbatch@example.co.uk"));
+                    "benny.cumberbatch@example.co.uk",
+                    ""));
         }
         app.contacts().deleteAllContacts();
         assertEquals(0, app.contacts().getCount());
