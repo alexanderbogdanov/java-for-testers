@@ -5,7 +5,6 @@ import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

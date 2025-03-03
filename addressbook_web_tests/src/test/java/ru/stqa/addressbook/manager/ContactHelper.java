@@ -118,19 +118,8 @@ public class ContactHelper extends HelperBase {
     }
 
     private void initContactModification(ContactData contact) {
-        var rows = findElements(By.name("entry"));
-        for (var row : rows) {
-            var cells = row.findElements(By.tagName("td"));
-            var idElement = cells.get(0).findElement(By.tagName("input"));
-            var id = idElement.getDomAttribute("value");
-            if (id == null || id.isEmpty()) {
-                continue;
-            }
-            if (id.equals(contact.id())) {
-                cells.get(7).findElement(By.cssSelector(".center img[alt='Edit']")).click();
-                break;
-            }
-        }
+        String locator = String.format("//tr[td/input[@value='%s']]/td[8]//img[@alt='Edit']", contact.id());
+        click(By.xpath(locator));
     }
 
 }
