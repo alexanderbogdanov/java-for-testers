@@ -26,3 +26,5 @@ gradle-app.setting
 addressbook_web_tests/groups.json
 
 addressbook_web_tests/groups.yaml
+
+addressbook_web_tests/groups.xml
