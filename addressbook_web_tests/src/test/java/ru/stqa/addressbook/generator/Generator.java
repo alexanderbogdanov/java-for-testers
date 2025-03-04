@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
@@ -69,10 +70,18 @@ public class Generator {
     private void save(Object data) throws IOException {
         if ("json".equals(format)) {
             saveAsJson(data);
+        }
+        if ("yaml".equals(format)) {
+            saveAsYaml(data);
         } else {
             throw new IllegalArgumentException("Unknown format: " + format);
         }
 
+    }
+
+    private void saveAsYaml(Object data) throws IOException {
+        var mapper = new YAMLMapper();
+        mapper.writeValue(new File(output), data);
     }
 
     private void saveAsJson(Object data) throws IOException {

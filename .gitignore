@@ -24,3 +24,5 @@ gradle-app.setting
 .idea/
 
 addressbook_web_tests/groups.json
+
+addressbook_web_tests/groups.yaml
