@@ -2,8 +2,13 @@ package ru.stqa.addressbook.generator;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
@@ -22,7 +27,7 @@ public class Generator {
     @Parameter(names = {"--count", "-c"})
     int count;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
                 .addObject(generator)
@@ -31,7 +36,7 @@ public class Generator {
         generator.run();
     }
 
-    private void run() {
+    private void run() throws IOException {
         var data = generate();
         save(data);
     }
@@ -61,8 +66,24 @@ public class Generator {
         return null;
     }
 
-    private void save(Object data) {
+    private void save(Object data) throws IOException {
+        if ("json".equals(format)) {
+            saveAsJson(data);
+        } else {
+            throw new IllegalArgumentException("Unknown format: " + format);
+        }
 
     }
 
+    private void saveAsJson(Object data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        var json = mapper.writeValueAsString(data);
+
+        try (var writer = new FileWriter(output)) {
+            writer.write(json);
+        };
+    }
 }
+
+

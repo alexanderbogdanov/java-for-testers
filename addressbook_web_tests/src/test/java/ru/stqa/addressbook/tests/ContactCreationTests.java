@@ -3,7 +3,6 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
-import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -22,3 +22,5 @@ gradle-app.setting
 .classpath
 
 .idea/
+
+addressbook_web_tests/groups.json
