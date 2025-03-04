@@ -3,12 +3,14 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
 
 public class ContactCreationTests extends TestBase {
 

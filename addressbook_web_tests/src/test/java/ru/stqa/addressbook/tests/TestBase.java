@@ -18,15 +18,6 @@ public class TestBase {
         }
     }
 
-    public static String randomString(int n) {
-        Random rnd = new Random();
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            result.append((char) (rnd.nextInt(26) + 'a'));
-        }
-        return result.toString();
-    }
-
     public static String getRandomImagePath(String dir) {
         var fileNames = new File(dir).list();
         if (fileNames == null || fileNames.length == 0) {

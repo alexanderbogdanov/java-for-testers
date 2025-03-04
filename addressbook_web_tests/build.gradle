@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.29.0'
+    implementation 'org.jcommander:jcommander:2.0'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.29.0'
 }
 

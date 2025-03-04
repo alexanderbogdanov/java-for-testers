@@ -2,6 +2,7 @@ package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.GroupData;
+import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +19,7 @@ public class GroupModificationTests extends TestBase {
         }
         var groupsBefore = app.groups().getAll();
         var index = new Random().nextInt(groupsBefore.size());
-        var newName = "modified_" + randomString(5);
+        var newName = "modified_" + CommonFunctions.randomString(5);
         var testData = new GroupData().withName(newName);
         app.groups().modifyGroup(groupsBefore.get(index), testData);
         var groupsAfter = app.groups().getAll();
