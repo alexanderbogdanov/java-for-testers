@@ -1,19 +1,23 @@
 package ru.stqa.addressbook.tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.utils.CommonFunctions;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
 
 public class ContactCreationTests extends TestBase {
 
-    public static List<ContactData> contactProvider() {
+    public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
 
         result.add(new ContactData()
@@ -26,29 +30,19 @@ public class ContactCreationTests extends TestBase {
                 .withEmail("benedict@example.com")
                 .withEmail2("ben.c@example.net")
                 .withEmail3("benny@example.co.uk")
-                .withPhoto(getRandomImagePath("src/test/resources/images/")));
+                .withPhoto(CommonFunctions.getRandomImagePath("src/test/resources/images/")));
 
         result.add(new ContactData());
         result.add(new ContactData().withFirstName("John"));
         result.add(new ContactData().withLastName("Doe"));
         result.add(new ContactData().withEmail("johndoe@example.com"));
-        result.add(new ContactData().withPhoto(getRandomImagePath("src/test/resources/images/")));
+        result.add(new ContactData().withPhoto(CommonFunctions.getRandomImagePath("src/test/resources/images/")));
 
-        for (int i = 0; i < 5; i++) {
-            result.add(new ContactData()
-                    .withFirstName(randomString(i * 5))
-                    .withLastName(randomString(i * 5))
-                    .withAddress(randomString(i * 10))
-                    .withHomePhone(randomString(i * 10))
-                    .withMobilePhone(randomString(i * 10))
-                    .withWorkPhone(randomString(i * 10))
-                    .withEmail(randomString(i * 10))
-                    .withEmail2(randomString(i * 10))
-                    .withEmail3(randomString(i * 10))
-                    .withPhoto(getRandomImagePath("src/test/resources/images/"))
-            );
-        }
 
+        ObjectMapper mapper = new ObjectMapper();
+        List<ContactData> fileData = mapper.readValue(new File("contacts.json"), new TypeReference<>() {
+        });
+        result.addAll(fileData);
         return result;
     }
 

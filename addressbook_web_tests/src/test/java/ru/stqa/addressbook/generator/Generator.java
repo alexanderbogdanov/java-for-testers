@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
+import static ru.stqa.addressbook.utils.CommonFunctions.*;
 
 public class Generator {
 
@@ -65,7 +66,22 @@ public class Generator {
     }
 
     private Object generateContacts() {
-        return null;
+        var result = new ArrayList<ContactData>();
+            for (int i = 0; i < count; i++) {
+            result.add(new ContactData()
+                    .withFirstName(randomString(i * 5))
+                    .withLastName(randomString(i * 5))
+                    .withAddress(randomString(i * 10))
+                    .withHomePhone(randomPhone())
+                    .withMobilePhone(randomPhone())
+                    .withWorkPhone(randomPhone())
+                    .withEmail(randomEmail())
+                    .withEmail2(randomEmail())
+                    .withEmail3(randomEmail())
+                    .withPhoto(getRandomImagePath("src/test/resources/images/"))
+            );
+        }
+        return result;
     }
 
     private void save(Object data) throws IOException {
