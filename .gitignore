@@ -28,3 +28,5 @@ addressbook_web_tests/groups.json
 addressbook_web_tests/groups.yaml
 
 addressbook_web_tests/groups.xml
+
+addressbook_web_tests/contacts.json
