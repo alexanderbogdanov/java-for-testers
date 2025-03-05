@@ -6,13 +6,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.Properties;
+
 public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper sessionManager;
     private GroupHelper groups;
     private ContactHelper contacts;
 
-    public void init(String browser) {
+    private Properties properties;
+
+    public void init(String browser, Properties properties) {
+        this.properties = properties;
         if (driver == null) {
             System.setProperty("webdriver.http.factory", "jdk-http-client");
             if ("chrome".equals(browser)) {
@@ -28,9 +33,9 @@ public class ApplicationManager {
                 driver.quit();
                 driver = null;
             }));
-            driver.get("http://localhost/addressbook/");
+            driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1280, 680));
-            sessionManager().login("admin", "secret");
+            sessionManager().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
         }
     }
 

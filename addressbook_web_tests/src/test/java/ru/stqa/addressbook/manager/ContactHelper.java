@@ -118,8 +118,8 @@ public class ContactHelper extends HelperBase {
     }
 
     private void initContactModification(ContactData contact) {
-        String locator = String.format("//tr[td/input[@value='%s']]/td[8]//img[@alt='Edit']", contact.id());
-        click(By.xpath(locator));
+        String locator = String.format("a[href='edit.php?id=%s']", contact.id());
+        click(By.cssSelector(locator));
     }
 
 }
