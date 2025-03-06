@@ -13,11 +13,18 @@ public class JdbcHelper extends HelperBase {
     }
 
     public List<GroupData> getGroupList() {
-        var groups = new ArrayList<GroupData>();
-        try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
 
-             var statement = conn.createStatement();
-             var result = statement.executeQuery("SELECT group_id, group_name, group_header, group_footer FROM group_list")) {
+        var groups = new ArrayList<GroupData>();
+
+        String dbUrl = manager.getProperties().getProperty("db.url");
+        String dbUsername = manager.getProperties().getProperty("db.username");
+        String dbPassword = manager.getProperties().getProperty("db.password");
+
+        String query = "SELECT group_id, group_name, group_header, group_footer FROM group_list";
+
+        try (var connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             var preparedStatement = connection.prepareStatement(query);
+             var result = preparedStatement.executeQuery()) {
 
             while (result.next()) {
                 groups.add(new GroupData()
@@ -26,9 +33,11 @@ public class JdbcHelper extends HelperBase {
                         .withHeader(result.getString("group_header"))
                         .withFooter(result.getString("group_footer")));
             }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error fetching groups from database", e);
         }
+
         return groups;
     }
 }

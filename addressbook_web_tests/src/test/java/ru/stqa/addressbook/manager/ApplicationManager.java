@@ -14,7 +14,6 @@ public class ApplicationManager {
     private GroupHelper groups;
     private ContactHelper contacts;
     private JdbcHelper jdbc;
-
     private Properties properties;
 
     public void init(String browser, Properties properties) {
@@ -38,6 +37,10 @@ public class ApplicationManager {
             driver.manage().window().setSize(new Dimension(1280, 680));
             sessionManager().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
         }
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     public LoginHelper sessionManager() {

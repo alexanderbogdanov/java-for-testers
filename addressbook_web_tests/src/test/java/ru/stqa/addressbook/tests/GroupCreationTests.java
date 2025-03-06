@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.GroupData;
-import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,10 +45,8 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("singleRandomGroupProvider")
     public void testGroupCreation(GroupData group) {
-//        var groupsBefore = app.groups().getAll();
         var groupsBefore = app.jdbc().getGroupList();
         app.groups().createGroup(group);
-//        var groupsAfter = app.groups().getAll();
         var groupsAfter = app.jdbc().getGroupList();
         Comparator<GroupData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
         groupsAfter.sort(compareById);
