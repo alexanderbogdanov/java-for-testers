@@ -2,6 +2,8 @@ package ru.stqa.addressbook.tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.GroupData;
@@ -11,8 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.*;
 import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
 
 public class GroupCreationTests extends TestBase {
@@ -70,6 +74,27 @@ public class GroupCreationTests extends TestBase {
         app.groups().createGroup(group);
         int newGroupCount = app.groups().getCount();
         assertEquals(groupCount, newGroupCount);
+    }
+
+    @Test
+    public void testGroupListInUIvsDB() {
+        List<GroupData> uiGroups = app.groups().getAll();
+        List<GroupData> dbGroups = app.jdbc().getGroupList();
+
+        List<GroupData> uiGroupsForComparison = uiGroups.stream()
+                .map(g -> new GroupData().withName(g.name()))
+                .sorted(Comparator.comparing(GroupData::name))
+                .collect(Collectors.toList());
+
+        List<GroupData> dbGroupsForComparison = dbGroups.stream()
+                .map(g -> new GroupData().withName(g.name()))
+                .sorted(Comparator.comparing(GroupData::name))
+                .collect(Collectors.toList());
+
+        assumeTrue(!uiGroupsForComparison.isEmpty(), "UI group list is empty. Test skipped.");
+        assumeTrue(!dbGroupsForComparison.isEmpty(), "DB group list is empty. Test skipped.");
+
+        assertEquals(uiGroupsForComparison, dbGroupsForComparison, "The UI group list should match the DB group list (by name).");
     }
 
 }
