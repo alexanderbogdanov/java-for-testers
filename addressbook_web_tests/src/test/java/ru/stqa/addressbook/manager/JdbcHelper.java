@@ -16,9 +16,9 @@ public class JdbcHelper extends HelperBase {
 
         var groups = new ArrayList<GroupData>();
 
-        String dbUrl = manager.getProperties().getProperty("db.url");
-        String dbUsername = manager.getProperties().getProperty("db.username");
-        String dbPassword = manager.getProperties().getProperty("db.password");
+        String dbUrl = getProperty("db.url");
+        String dbUsername = getProperty("db.username");
+        String dbPassword = getProperty("db.password");
 
         String query = "SELECT group_id, group_name, group_header, group_footer FROM group_list";
 

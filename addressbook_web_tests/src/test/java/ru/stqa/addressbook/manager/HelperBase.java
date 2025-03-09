@@ -86,4 +86,8 @@ public class HelperBase {
         find(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 
+    protected String getProperty(String key) {
+        return manager.getProperties().getProperty(key);
+    }
+
 }
