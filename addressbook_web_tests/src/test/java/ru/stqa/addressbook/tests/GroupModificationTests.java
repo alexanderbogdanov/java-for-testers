@@ -14,15 +14,15 @@ public class GroupModificationTests extends TestBase {
 
     @Test
     void testGroupModification() {
-        if (app.groups().getCount() == 0) {
-            app.groups().createGroup(new GroupData("", "group name", "group header", "group footer"));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
-        var groupsBefore = app.groups().getAll();
+        var groupsBefore = app.hbm().getGroupList();
         var index = new Random().nextInt(groupsBefore.size());
         var newName = "modified_" + CommonFunctions.randomString(5);
         var testData = new GroupData().withName(newName);
         app.groups().modifyGroup(groupsBefore.get(index), testData);
-        var groupsAfter = app.groups().getAll();
+        var groupsAfter = app.hbm().getGroupList();
         var expectedGroups = new ArrayList<>(groupsBefore);
         expectedGroups.set(index, testData.withId(groupsBefore.get(index).id()));
         Comparator<GroupData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
