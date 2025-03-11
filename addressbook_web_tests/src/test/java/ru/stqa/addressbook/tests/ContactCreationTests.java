@@ -2,6 +2,7 @@ package ru.stqa.addressbook.tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
@@ -13,8 +14,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static ru.stqa.addressbook.utils.CommonFunctions.*;
 
 public class ContactCreationTests extends TestBase {
@@ -93,6 +96,27 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
         var contactsAfter = app.contacts().getAll();
         assertEquals(contactsAfter, contactsBefore);
+    }
+
+    @Test
+    public void testContactListInUIvsDB() {
+        List<ContactData> uiContacts = app.contacts().getAll();
+        List<ContactData> dbContacts = app.jdbc().getContactList();
+
+        List<ContactData> uiContactsForComparison = uiContacts.stream()
+                .map(c -> new ContactData().withFirstName(c.firstName()))
+                .sorted(Comparator.comparing(ContactData::firstName))
+                .collect(Collectors.toList());
+
+        List<ContactData> dbContactsForComparison = dbContacts.stream()
+                .map(c -> new ContactData().withFirstName(c.firstName()))
+                .sorted(Comparator.comparing(ContactData::firstName))
+                .collect(Collectors.toList());
+
+        assumeTrue(!uiContactsForComparison.isEmpty(), "UI contact list is empty. Test skipped.");
+        assumeTrue(!dbContactsForComparison.isEmpty(), "DB contact list is empty. Test skipped.");
+
+        assertEquals(uiContactsForComparison, dbContactsForComparison, "The UI contact list should match the DB contact list (by first name).");
     }
 
 }
