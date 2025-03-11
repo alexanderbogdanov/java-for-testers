@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
 import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.stqa.addressbook.utils.CommonFunctions.*;
 
 public class ContactCreationTests extends TestBase {
 
@@ -46,28 +48,33 @@ public class ContactCreationTests extends TestBase {
         return result;
     }
 
+    public static List<ContactData> singleRandomContactProvider() {
+        return new ArrayList<>(List.of(new ContactData()
+                .withFirstName(randomString(5))
+                .withMiddleName(randomString(4))
+                .withLastName(randomString(5))
+                .withAddress(randomString(10))
+                .withHomePhone(randomPhone())
+                .withMobilePhone(randomPhone())
+                .withWorkPhone(randomPhone())
+                .withEmail(randomEmail())
+                .withEmail2(randomEmail())
+                .withEmail3(randomEmail())));
+
+    }
+
 
     @ParameterizedTest
-    @MethodSource("contactProvider")
-    public void testMultipleContactCreation(ContactData contact) {
-        var contactsBefore = app.contacts().getAll();
+    @MethodSource("singleRandomContactProvider")
+    public void testContactCreation(ContactData contact) {
+        var contactsBefore = app.jdbc().getContactList();
         app.contacts().createContact(contact);
-        var contactsAfter = app.contacts().getAll();
-        Comparator<ContactData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
+        var contactsAfter = app.jdbc().getContactList();
+        Comparator<ContactData> compareById = Comparator.comparingInt(c -> Integer.parseInt(c.id()));
         contactsAfter.sort(compareById);
+        var maxId = contactsAfter.get(contactsAfter.size() - 1).id();
         var expectedContacts = new ArrayList<>(contactsBefore);
-        expectedContacts.add(contact
-                .withId(contactsAfter.get(contactsAfter.size() - 1).id())
-                .withLastName(contactsAfter.get(contactsAfter.size() - 1).lastName())
-                .withFirstName(contactsAfter.get(contactsAfter.size() - 1).firstName())
-                .withAddress("")
-                .withEmail("")
-                .withEmail2("")
-                .withEmail3("")
-                .withHomePhone("")
-                .withMobilePhone("")
-                .withWorkPhone("")
-                .withPhoto(""));
+        expectedContacts.add(contact.withId(maxId));
         expectedContacts.sort(compareById);
         assertEquals(contactsAfter, expectedContacts);
 
@@ -75,7 +82,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> NegativeContactProvider() {
         return new ArrayList<>(List.of(
-                new ContactData("", "", "last name'", "",
+                new ContactData("", "", "", "last name'", "",
                         "", "", "", "", "", "", "")));
     }
 

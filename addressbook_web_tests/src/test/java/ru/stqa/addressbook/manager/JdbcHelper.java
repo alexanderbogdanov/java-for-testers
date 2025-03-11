@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.manager;
 
+import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.sql.DriverManager;
@@ -12,13 +13,13 @@ public class JdbcHelper extends HelperBase {
         super(manager);
     }
 
+    String dbUrl = getProperty("db.url");
+    String dbUsername = getProperty("db.username");
+    String dbPassword = getProperty("db.password");
+
     public List<GroupData> getGroupList() {
 
         var groups = new ArrayList<GroupData>();
-
-        String dbUrl = getProperty("db.url");
-        String dbUsername = getProperty("db.username");
-        String dbPassword = getProperty("db.password");
 
         String query = "SELECT group_id, group_name, group_header, group_footer FROM group_list";
 
@@ -39,6 +40,38 @@ public class JdbcHelper extends HelperBase {
         }
 
         return groups;
+    }
+
+    public List<ContactData> getContactList() {
+
+        var contacts = new ArrayList<ContactData>();
+
+        String query = "SELECT id, firstname, middlename, lastname, address, email, email2, email3, home, mobile, `work` FROM addressbook";
+
+        try (var connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             var preparedStatement = connection.prepareStatement(query);
+             var result = preparedStatement.executeQuery()) {
+
+            while (result.next()) {
+                contacts.add(new ContactData()
+                        .withId(result.getString("id"))
+                        .withFirstName(result.getString("firstname"))
+                        .withMiddleName(result.getString("middlename"))
+                        .withLastName(result.getString("lastname"))
+                        .withAddress(result.getString("address"))
+                        .withEmail(result.getString("email"))
+                        .withEmail2(result.getString("email2"))
+                        .withEmail3(result.getString("email3"))
+                        .withHomePhone(result.getString("home"))
+                        .withMobilePhone(result.getString("mobile"))
+                        .withWorkPhone(result.getString("work")));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching contacts from database", e);
+        }
+
+        return contacts;
     }
 }
 
