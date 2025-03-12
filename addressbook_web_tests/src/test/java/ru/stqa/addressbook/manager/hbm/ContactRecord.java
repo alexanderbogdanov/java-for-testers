@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
         @Column(name = "firstname")
         public String firstName;
         @Column(name = "lastname")
+        public String middleName;
+        @Column(name = "middlename")
         public String lastName;
         @Column(name = "address")
         public String address;
@@ -35,9 +37,10 @@ import jakarta.persistence.Table;
         public ContactRecord() {
         }
 
-        public ContactRecord(int id, String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String email, String email2, String email3) {
+        public ContactRecord(int id, String firstName, String middleName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String email, String email2, String email3) {
             this.id = id;
             this.firstName = firstName;
+            this.middleName = middleName;
             this.lastName = lastName;
             this.address = address;
             this.homePhone = homePhone;
