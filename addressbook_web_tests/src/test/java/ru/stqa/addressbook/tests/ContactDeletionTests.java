@@ -13,8 +13,8 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData(
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData(
                     "", "Benedict",
                     "Benya",
                     "Cumberbatch",
@@ -27,10 +27,10 @@ public class ContactDeletionTests extends TestBase {
                     "benny.cumberbatch@example.co.uk",
                     ""));
         }
-        List<ContactData> contactsBefore = app.contacts().getAll();
+        List<ContactData> contactsBefore = app.hbm().getContactList();
         var index = new Random().nextInt(contactsBefore.size());
         app.contacts().deleteContact(contactsBefore.get(index));
-        List<ContactData> contactsAfter = app.contacts().getAll();
+        List<ContactData> contactsAfter = app.hbm().getContactList();
         List<ContactData> expectedContacts = new ArrayList<>(contactsBefore);
         expectedContacts.remove(index);
         assertEquals(expectedContacts, contactsAfter);
@@ -38,8 +38,8 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testAllContactsDeletion() {
-        if (!app.contacts().isContactPresent()) {
-            app.contacts().createContact(new ContactData(
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData(
                     "", "Benedict",
                     "Benya",
                     "Cumberbatch",
@@ -53,6 +53,6 @@ public class ContactDeletionTests extends TestBase {
                     ""));
         }
         app.contacts().deleteAllContacts();
-        assertEquals(0, app.contacts().getCount());
+        assertEquals(0, app.hbm().getContactCount());
     }
 }

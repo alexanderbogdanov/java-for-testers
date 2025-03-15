@@ -14,19 +14,16 @@ public class GroupRecord {
     @Id
     @Column(name = "group_id")
     public int id;
-
     @Column(name = "group_name")
     public String name;
-
     @Column(name = "group_header")
     public String header;
-
     @Column(name = "group_footer")
     public String footer;
-
     public Date deprecated = new Date();
 
-    public GroupRecord() {}
+    public GroupRecord() {
+    }
 
     public GroupRecord(int id, String name, String header, String footer) {
         this.id = id;

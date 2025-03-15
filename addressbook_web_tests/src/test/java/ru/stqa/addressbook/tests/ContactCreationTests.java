@@ -70,9 +70,9 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("singleRandomContactProvider")
     public void testContactCreation(ContactData contact) {
-        var contactsBefore = app.jdbc().getContactList();
+        var contactsBefore = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var contactsAfter = app.jdbc().getContactList();
+        var contactsAfter = app.hbm().getContactList();
         Comparator<ContactData> compareById = Comparator.comparingInt(c -> Integer.parseInt(c.id()));
         contactsAfter.sort(compareById);
         var maxId = contactsAfter.get(contactsAfter.size() - 1).id();
