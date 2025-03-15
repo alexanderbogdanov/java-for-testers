@@ -13,10 +13,6 @@ public class JdbcHelper extends HelperBase {
         super(manager);
     }
 
-    String dbUrl = getProperty("db.url");
-    String dbUsername = getProperty("db.username");
-    String dbPassword = getProperty("db.password");
-
     public List<GroupData> getGroupList() {
 
         var groups = new ArrayList<GroupData>();

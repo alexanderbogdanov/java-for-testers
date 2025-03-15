@@ -13,11 +13,17 @@ import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
+    protected final String dbUrl;
+    protected final String dbUsername;
+    protected final String dbPassword;
 
     public static final int DEFAULT_WAIT_SECONDS = 10;
 
     public HelperBase(ApplicationManager manager) {
         this.manager = manager;
+        this.dbUrl = getProperty("db.url");
+        this.dbUsername = getProperty("db.username");
+        this.dbPassword = getProperty("db.password");
     }
 
     protected WebElement find(By locator) {
