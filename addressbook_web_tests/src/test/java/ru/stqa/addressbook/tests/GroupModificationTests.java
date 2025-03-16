@@ -15,7 +15,7 @@ public class GroupModificationTests extends TestBase {
     @Test
     void testGroupModification() {
         if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+            app.hbm().createGroup(new GroupData().withName("Default group"));
         }
         var groupsBefore = app.hbm().getGroupList();
         var index = new Random().nextInt(groupsBefore.size());

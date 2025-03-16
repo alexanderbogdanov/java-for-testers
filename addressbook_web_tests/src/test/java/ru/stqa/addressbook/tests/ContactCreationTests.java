@@ -102,16 +102,16 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("NegativeContactProvider")
     public void testContactCreationFail(ContactData contact) {
-        var contactsBefore = app.contacts().getAll();
+        var contactsBefore = app.contacts().getCount();
         app.contacts().createContact(contact);
-        var contactsAfter = app.contacts().getAll();
+        var contactsAfter = app.contacts().getCount();
         assertEquals(contactsAfter, contactsBefore);
     }
 
     @Test
     public void testContactListInUIvsDB() {
         List<ContactData> uiContacts = app.contacts().getAll();
-        List<ContactData> dbContacts = app.jdbc().getContactList();
+        List<ContactData> dbContacts = app.hbm().getContactList();
 
         List<ContactData> uiContactsForComparison = uiContacts.stream()
                 .map(c -> new ContactData().withFirstName(c.firstName()))

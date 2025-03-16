@@ -78,7 +78,7 @@ public class GroupCreationTests extends TestBase {
     @Test
     public void testGroupListInUIvsDB() {
         List<GroupData> uiGroups = app.groups().getAll();
-        List<GroupData> dbGroups = app.jdbc().getGroupList();
+        List<GroupData> dbGroups = app.hbm().getGroupList();
 
         List<GroupData> uiGroupsForComparison = uiGroups.stream()
                 .map(g -> new GroupData().withName(g.name()))

@@ -11,6 +11,7 @@ import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class HibernateHelper extends HelperBase {
@@ -87,6 +88,14 @@ public class HibernateHelper extends HelperBase {
                 sessionFactory.fromSession(session -> {
                     return session.createQuery("from ContactRecord", ContactRecord.class).list();
                 }));
+    }
+
+    public ContactData getRandomContact() {
+        List<ContactData> contacts = getContactList();
+        if (contacts.isEmpty()) {
+            throw new IllegalStateException("No contacts available to select randomly.");
+        }
+        return contacts.get(new Random().nextInt(contacts.size()));
     }
 
 

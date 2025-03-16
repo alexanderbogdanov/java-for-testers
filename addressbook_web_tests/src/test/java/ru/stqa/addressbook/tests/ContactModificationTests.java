@@ -13,21 +13,21 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     void testContactModification() {
-        if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData()
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData()
                     .withFirstName("Default")
                     .withLastName("Contact"));
         }
 
-        var contactsBefore = app.contacts().getAll();
-        var contactToModify = app.contacts().getRandomContact();
+        var contactsBefore = app.hbm().getContactList();
+        var contactToModify = app.hbm().getRandomContact();
         var newFirstName = "modified_" + CommonFunctions.randomString(5);
         var testData = new ContactData()
                 .withFirstName(newFirstName)
                 .withId(contactToModify.id())
                 .withLastName(contactToModify.lastName());
         app.contacts().modifyContact(contactToModify, testData);
-        var contactsAfter = app.contacts().getAll();
+        var contactsAfter = app.hbm().getContactList();
         int index = contactsBefore.indexOf(contactToModify);
         var expectedContacts = new ArrayList<>(contactsBefore);
         expectedContacts.set(index, testData.withId(contactToModify.id()));
