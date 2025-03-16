@@ -42,7 +42,8 @@ public class JdbcHelper extends HelperBase {
 
         var contacts = new ArrayList<ContactData>();
 
-        String query = "SELECT id, firstname, middlename, lastname, address, email, email2, email3, home, mobile, `work` FROM addressbook";
+        String query = "SELECT id, firstname, middlename, lastname, nickname, company, " +
+                "title, address, email, email2, email3, homepage, home, mobile, `work`, fax FROM addressbook";
 
         try (var connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
              var preparedStatement = connection.prepareStatement(query);
@@ -54,13 +55,18 @@ public class JdbcHelper extends HelperBase {
                         .withFirstName(result.getString("firstname"))
                         .withMiddleName(result.getString("middlename"))
                         .withLastName(result.getString("lastname"))
+                        .withNickname(result.getString("nickname"))
+                        .withCompany(result.getString("company"))
+                        .withTitle(result.getString("title"))
                         .withAddress(result.getString("address"))
                         .withEmail(result.getString("email"))
                         .withEmail2(result.getString("email2"))
                         .withEmail3(result.getString("email3"))
+                        .withHomePage(result.getString("homepage"))
                         .withHomePhone(result.getString("home"))
                         .withMobilePhone(result.getString("mobile"))
-                        .withWorkPhone(result.getString("work")));
+                        .withWorkPhone(result.getString("work"))
+                        .withFax(result.getString("fax")));
             }
 
         } catch (SQLException e) {

@@ -22,7 +22,7 @@ public class HibernateHelper extends HelperBase {
 
         sessionFactory = new Configuration()
                 .addAnnotatedClass(GroupRecord.class)
-                .addAnnotatedClass(ContactRecord.class) //?
+                .addAnnotatedClass(ContactRecord.class)
                 .setProperty(AvailableSettings.JAKARTA_JDBC_URL, dbUrl)
                 .setProperty(AvailableSettings.JAKARTA_JDBC_USER, dbUsername)
                 .setProperty(AvailableSettings.JAKARTA_JDBC_PASSWORD, dbPassword)
@@ -45,34 +45,16 @@ public class HibernateHelper extends HelperBase {
         return result;
     }
 
-
-//    static List<GroupData> convertList(List<GroupRecord> records) {
-//        List<GroupData> result = new java.util.ArrayList<>();
-//        for (var record : records) {
-//            result.add(convert(record));
-//        }
-//        return result;
-//    }
-//
-//    static List<ContactData> convertList(List<ContactRecord> records) {
-//        List<ContactData> result = new java.util.ArrayList<>();
-//        for (var record : records) {
-//            result.add(convert(record));
-//        }
-//        return result;
-//    }
-
     private static GroupData convert(GroupRecord record) {
         return new GroupData("" + record.id, record.name, record.header, record.footer);
     }
 
     private static ContactData convert(ContactRecord record) {
         return new ContactData("" + record.id, record.firstName, record.middleName,
-                record.lastName, record.address, record.homePhone,
-                record.mobilePhone, record.workPhone, record.email,
-                record.email2, record.email3, "");
+                record.lastName, record.nickname, record.company, record.title, record.address, record.homePhone,
+                record.mobilePhone, record.workPhone, record.fax, record.email,
+                record.email2, record.email3, record.homePage, "");
     }
-
 
     private static GroupRecord convert(GroupData data) {
         String id = data.id();
@@ -88,9 +70,9 @@ public class HibernateHelper extends HelperBase {
             id = "0";
         }
         return new ContactRecord(Integer.parseInt(id), data.firstName(),
-                data.middleName(), data.lastName(), data.address(),
-                data.homePhone(), data.mobilePhone(), data.workPhone(),
-                data.email(), data.email2(), data.email3());
+                data.middleName(), data.lastName(), data.nickname(), data.company(), data.title(), data.address(),
+                data.homePhone(), data.mobilePhone(), data.workPhone(), data.fax(),
+                data.email(), data.email2(), data.email3(), data.homePage());
     }
 
     public List<GroupData> getGroupList() {

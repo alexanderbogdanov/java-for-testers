@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
-import ru.stqa.addressbook.model.GroupData;
 import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.io.File;
@@ -27,14 +26,20 @@ public class ContactCreationTests extends TestBase {
 
         result.add(new ContactData()
                 .withFirstName("Benedict")
+                .withMiddleName("Timothy Carlton")
                 .withLastName("Cumberbatch")
+                .withNickname("Benny")
+                .withCompany("Sherlock Holmes")
+                .withTitle("Sherlock")
                 .withAddress("221B Baker Street")
                 .withHomePhone("+44 20 7900 9000")
                 .withMobilePhone("+44 7700 900900")
                 .withWorkPhone("+44 20 7946 0000")
+                .withFax("+44 7700 9000")
                 .withEmail("benedict@example.com")
                 .withEmail2("ben.c@example.net")
                 .withEmail3("benny@example.co.uk")
+                .withHomePage("www.benedictcumberbatch.com")
                 .withPhoto(CommonFunctions.getRandomImagePath("src/test/resources/images/")));
 
         result.add(new ContactData());
@@ -56,13 +61,18 @@ public class ContactCreationTests extends TestBase {
                 .withFirstName(randomString(5))
                 .withMiddleName(randomString(4))
                 .withLastName(randomString(5))
+                .withNickname(randomString(5))
+                .withCompany(randomString(5))
+                .withTitle(randomString(5))
                 .withAddress(randomString(10))
                 .withHomePhone(randomPhone())
                 .withMobilePhone(randomPhone())
                 .withWorkPhone(randomPhone())
+                .withFax(randomPhone())
                 .withEmail(randomEmail())
                 .withEmail2(randomEmail())
-                .withEmail3(randomEmail())));
+                .withEmail3(randomEmail())
+                .withHomePage(randomString(5))));
 
     }
 
@@ -85,8 +95,8 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> NegativeContactProvider() {
         return new ArrayList<>(List.of(
-                new ContactData("", "", "", "last name'", "",
-                        "", "", "", "", "", "", "")));
+                new ContactData("", "", "", "last name'", "", "", "",
+                        "", "", "", "", "", "", "", "", "", "")));
     }
 
     @ParameterizedTest
