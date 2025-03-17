@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
-import static ru.stqa.addressbook.utils.CommonFunctions.randomString;
+import static ru.stqa.addressbook.utils.CommonFunctions.*;
 
 public class GroupCreationTests extends TestBase {
 
@@ -40,9 +40,9 @@ public class GroupCreationTests extends TestBase {
 
     public static List<GroupData> singleRandomGroupProvider() {
         return new ArrayList<>(List.of(new GroupData()
-                .withName(randomString(10))
-                .withHeader(randomString(20))
-                .withFooter(randomString(30))));
+                .withName(randomCompany())
+                .withHeader(randomHeader())
+                .withFooter(randomFooter())));
     }
 
     @ParameterizedTest

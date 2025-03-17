@@ -17,6 +17,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.1'
     implementation 'com.mysql:mysql-connector-j:9.2.0'
     implementation 'org.hibernate.orm:hibernate-core:6.6.10.Final'
+    implementation 'net.datafaker:datafaker:2.4.2'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.29.0'
 }
 

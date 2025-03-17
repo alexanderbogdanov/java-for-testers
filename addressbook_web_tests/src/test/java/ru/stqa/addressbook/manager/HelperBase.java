@@ -42,7 +42,10 @@ public class HelperBase {
     protected void type(By locator, String text) {
         find(locator).clear();
         click(locator);
-        find(locator).sendKeys(text);
+        if (text != null) {
+            find(locator).sendKeys(text);
+        }
+//        find(locator).sendKeys(text);
     }
 
 

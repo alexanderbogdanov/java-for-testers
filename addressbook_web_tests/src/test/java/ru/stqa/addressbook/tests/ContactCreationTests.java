@@ -40,13 +40,13 @@ public class ContactCreationTests extends TestBase {
                 .withEmail2("ben.c@example.net")
                 .withEmail3("benny@example.co.uk")
                 .withHomePage("www.benedictcumberbatch.com")
-                .withPhoto(CommonFunctions.getRandomImagePath("src/test/resources/images/")));
+                .withPhoto(getRandomImagePath("src/test/resources/images/")));
 
         result.add(new ContactData());
         result.add(new ContactData().withFirstName("John"));
         result.add(new ContactData().withLastName("Doe"));
         result.add(new ContactData().withEmail("johndoe@example.com"));
-        result.add(new ContactData().withPhoto(CommonFunctions.getRandomImagePath("src/test/resources/images/")));
+        result.add(new ContactData().withPhoto(getRandomImagePath("src/test/resources/images/")));
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -58,21 +58,21 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> singleRandomContactProvider() {
         return new ArrayList<>(List.of(new ContactData()
-                .withFirstName(randomString(5))
-                .withMiddleName(randomString(4))
-                .withLastName(randomString(5))
-                .withNickname(randomString(5))
-                .withCompany(randomString(5))
-                .withTitle(randomString(5))
-                .withAddress(randomString(10))
-                .withHomePhone(randomPhone())
-                .withMobilePhone(randomPhone())
-                .withWorkPhone(randomPhone())
-                .withFax(randomPhone())
+                .withFirstName(randomFirstName())
+                .withMiddleName(randomMiddleName())
+                .withLastName(randomLastName())
+                .withNickname(randomNickname())
+                .withCompany(randomCompany())
+                .withTitle(randomTitle())
+                .withAddress(randomAddress())
+                .withHomePhone(randomHomePhone())
+                .withMobilePhone(randomMobilePhone())
+                .withWorkPhone(randomWorkPhone())
+                .withFax(randomFax())
                 .withEmail(randomEmail())
                 .withEmail2(randomEmail())
                 .withEmail3(randomEmail())
-                .withHomePage(randomString(5))));
+                .withHomePage(randomHomePage())));
 
     }
 
