@@ -61,6 +61,10 @@ public class HelperBase {
                 .click();
     }
 
+    protected void refresh() {
+        manager.driver.navigate().refresh();
+    }
+
     protected boolean isElementPresent(By locator) {
         try {
             find(locator);

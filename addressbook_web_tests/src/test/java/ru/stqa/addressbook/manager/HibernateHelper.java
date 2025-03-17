@@ -10,7 +10,6 @@ import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 import ru.stqa.addressbook.utils.ConversionUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -56,33 +55,6 @@ public class HibernateHelper extends HelperBase {
             return session.createQuery("select count(*) from ContactRecord", Long.class).getSingleResult();
         });
     }
-
-//    static List<GroupData> convertGroupList(List<GroupRecord> records) {
-//        List<GroupData> result = new ArrayList<>();
-//        for (var record : records) {
-//            result.add(convert(record));
-//        }
-//        return result;
-//    }
-//
-//    static List<ContactData> convertContactList(List<ContactRecord> records) {
-//        List<ContactData> result = new ArrayList<>();
-//        for (var record : records) {
-//            result.add(convert(record));
-//        }
-//        return result;
-//    }
-//
-//    private static GroupData convert(GroupRecord record) {
-//        return new GroupData("" + record.id, record.name, record.header, record.footer);
-//    }
-//
-//    private static ContactData convert(ContactRecord record) {
-//        return new ContactData("" + record.id, record.firstName, record.middleName,
-//                record.lastName, record.nickname, record.company, record.title, record.address, record.homePhone,
-//                record.mobilePhone, record.workPhone, record.fax, record.email,
-//                record.email2, record.email3, record.homePage, "");
-//    }
 
     private static GroupRecord convert(GroupData data) {
         String id = data.id();
