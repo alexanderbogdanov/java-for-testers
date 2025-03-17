@@ -43,7 +43,7 @@ public class GroupHelper extends HelperBase {
     }
 
     private void selectGroup(GroupData group) {
-        click(By.cssSelector(String.format("input[value='%s']", group.id())));
+        waitAndClick(By.cssSelector(String.format("input[value='%s']", group.id())));
     }
 
     private void initGroupCreation() {
@@ -68,6 +68,7 @@ public class GroupHelper extends HelperBase {
     }
 
     private void returnToGroupsPage() {
+        waitForElement(By.linkText("group page"));
         click(By.linkText("group page"));
     }
 

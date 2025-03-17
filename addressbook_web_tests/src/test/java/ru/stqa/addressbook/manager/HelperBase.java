@@ -55,6 +55,12 @@ public class HelperBase {
         waitForElement(locator, DEFAULT_WAIT_SECONDS);
     }
 
+    protected void waitAndClick(By locator) {
+        new WebDriverWait(manager.driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(locator))
+                .click();
+    }
+
     protected boolean isElementPresent(By locator) {
         try {
             find(locator);

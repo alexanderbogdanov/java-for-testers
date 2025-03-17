@@ -46,7 +46,7 @@ public class ContactHelper extends HelperBase {
 
 
     private void gotoHomePage() {
-        click(By.linkText("home"));
+        waitAndClick(By.linkText("home"));
         waitForElement(By.id("maintable"));
     }
 
