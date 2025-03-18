@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
 import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.io.File;
@@ -127,6 +128,23 @@ public class ContactCreationTests extends TestBase {
         assumeTrue(!dbContactsForComparison.isEmpty(), "DB contact list is empty. Test skipped.");
 
         assertEquals(uiContactsForComparison, dbContactsForComparison, "The UI contact list should match the DB contact list (by first name).");
+    }
+
+    @Test
+    public void testCreateContactInGroup() {
+        var contact = new ContactData()
+                .withFirstName(randomFirstName())
+                .withLastName(randomLastName())
+                .withPhoto(getRandomImagePath("src/test/resources/images/"));
+        if (app.hbm().getGroupCount() == 0) {
+            app.groups().createGroup(new GroupData().withName(randomCompany()));
+        }
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createContact(contact, group);
+
+        var newRelated = app.hbm().getContactsInGroup(group);
+        assertEquals(oldRelated.size() + 1, newRelated.size());
     }
 
 }

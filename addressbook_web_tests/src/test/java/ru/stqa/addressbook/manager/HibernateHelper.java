@@ -13,6 +13,9 @@ import ru.stqa.addressbook.utils.ConversionUtil;
 import java.util.List;
 import java.util.Random;
 
+import static ru.stqa.addressbook.utils.ConversionUtil.convertContactList;
+import static ru.stqa.addressbook.utils.ConversionUtil.convertGroupList;
+
 
 public class HibernateHelper extends HelperBase {
     private final SessionFactory sessionFactory;
@@ -31,14 +34,14 @@ public class HibernateHelper extends HelperBase {
     }
 
     public List<GroupData> getGroupList() {
-        return ConversionUtil.convertGroupList(
+        return convertGroupList(
                 sessionFactory.fromSession(session -> {
                     return session.createQuery("from GroupRecord", GroupRecord.class).list();
                 }));
     }
 
     public List<ContactData> getContactList() {
-        return ConversionUtil.convertContactList(
+        return convertContactList(
                 sessionFactory.fromSession(session -> {
                     return session.createQuery("from ContactRecord", ContactRecord.class).list();
                 }));
@@ -98,6 +101,12 @@ public class HibernateHelper extends HelperBase {
             session.getTransaction().begin();
             session.persist(convert(contactData));
             session.getTransaction().commit();
+        });
+    }
+
+    public List<ContactData> getContactsInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
 }
