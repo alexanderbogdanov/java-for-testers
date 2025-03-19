@@ -33,6 +33,13 @@ public class GroupHelper extends HelperBase {
         returnToGroupsPage();
     }
 
+    public void deleteAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        deleteSelected();
+        returnToGroupsPage();
+    }
+
     public void modifyGroup(GroupData group, GroupData modifiedGroup) {
         openGroupsPage();
         refresh();
@@ -62,28 +69,22 @@ public class GroupHelper extends HelperBase {
     }
 
 
-    public void deleteAllGroups() {
-        openGroupsPage();
-        selectAllGroups();
-        deleteSelected();
-    }
-
     private void returnToGroupsPage() {
         waitForElement(By.linkText("group page"));
         click(By.linkText("group page"));
     }
 
 
-    public int getCount() {
-        openGroupsPage();
-        return findElements(By.name("selected[]")).size();
-    }
-
     private void selectAllGroups() {
         var checkboxes = findElements(By.name("selected[]"));
         for (var checkbox : checkboxes) {
             checkbox.click();
         }
+    }
+
+    public int getCount() {
+        openGroupsPage();
+        return findElements(By.name("selected[]")).size();
     }
 
     public List<GroupData> getAll() {

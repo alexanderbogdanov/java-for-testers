@@ -5,6 +5,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.nio.file.Paths;
@@ -45,7 +46,6 @@ public class HelperBase {
         if (text != null) {
             find(locator).sendKeys(text);
         }
-//        find(locator).sendKeys(text);
     }
 
 
@@ -66,6 +66,10 @@ public class HelperBase {
 
     protected void refresh() {
         manager.driver.navigate().refresh();
+    }
+
+    public void selectFromDropdown(By locator, String value) {
+        new Select(find(locator)).selectByValue(value);
     }
 
     protected boolean isElementPresent(By locator) {

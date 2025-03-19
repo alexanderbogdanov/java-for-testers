@@ -29,11 +29,6 @@ public class ContactHelper extends HelperBase {
         gotoHomePage();
     }
 
-    private void selectGroup(GroupData group) {
-        new Select(find(By.name("new_group"))).selectByValue(group.id());
-
-    }
-
     private void initContactCreation() {
         click(By.linkText("add new"));
     }
@@ -59,6 +54,9 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    private void selectGroup(GroupData group) {
+        selectFromDropdown(By.name("new_group"), group.id());
+    }
 
     private void gotoHomePage() {
         waitAndClick(By.linkText("home"));
@@ -143,4 +141,28 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector(locator));
     }
 
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        gotoHomePage();
+        selectGroupToRemoveContactFrom(group);
+        selectContact(contact);
+        click(By.name("remove"));
+        gotoHomePage();
+    }
+
+    private void selectGroupToRemoveContactFrom(GroupData group) {
+        selectFromDropdown(By.name("group"), group.id());
+    }
+
+    private void selectGroupForContact(GroupData group, ContactData contact) {
+        new Select(find(By.name("group"))).selectByValue(group.id());
+        selectContact(contact);
+    }
+
+    public void addExistingContactToGroup(ContactData contact, GroupData group) {
+        gotoHomePage();
+        selectContact(contact);
+        selectFromDropdown(By.name("to_group"), group.id());
+        click(By.name("add"));
+        gotoHomePage();
+    }
 }

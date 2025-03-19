@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static ru.stqa.addressbook.utils.CommonFunctions.*;
 
@@ -144,7 +145,20 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact, group);
 
         var newRelated = app.hbm().getContactsInGroup(group);
+        var contactsAfter = app.hbm().getContactList();
+        contactsAfter.sort(Comparator.comparingInt(c -> Integer.parseInt(c.id())));
+        var newContact = contactsAfter.get(contactsAfter.size() - 1);
+        var expectedRelated = new ArrayList<>(oldRelated);
+        expectedRelated.add(newContact);
+        Comparator<ContactData> compareById = Comparator.comparingInt(c -> Integer.parseInt(c.id()));
+        newRelated.sort(compareById);
+        expectedRelated.sort(compareById);
         assertEquals(oldRelated.size() + 1, newRelated.size());
+        assertEquals(expectedRelated, newRelated);
+
     }
+
+
+
 
 }

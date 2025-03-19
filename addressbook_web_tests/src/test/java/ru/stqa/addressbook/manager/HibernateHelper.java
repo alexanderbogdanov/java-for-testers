@@ -86,6 +86,14 @@ public class HibernateHelper extends HelperBase {
         return contacts.get(new Random().nextInt(contacts.size()));
     }
 
+    public GroupData getRandomGroup() {
+        List<GroupData> groups = getGroupList();
+        if (groups.isEmpty()) {
+            throw new IllegalStateException("No groups available to select randomly.");
+        }
+        return groups.get(new Random().nextInt(groups.size()));
+    }
+
 
 
     public void createGroup(GroupData groupData) {
@@ -109,4 +117,6 @@ public class HibernateHelper extends HelperBase {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
+
+
 }
