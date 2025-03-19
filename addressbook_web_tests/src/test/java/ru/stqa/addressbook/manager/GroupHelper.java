@@ -28,6 +28,7 @@ public class GroupHelper extends HelperBase {
 
     public void deleteGroup(GroupData group) {
         openGroupsPage();
+        refresh();
         selectGroup(group);
         deleteSelected();
         returnToGroupsPage();

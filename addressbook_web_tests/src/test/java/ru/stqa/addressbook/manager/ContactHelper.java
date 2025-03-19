@@ -130,6 +130,7 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         gotoHomePage();
+        refresh();
         initContactModification(contact);
         fillContactForm(modifiedContact);
         submitChanges();

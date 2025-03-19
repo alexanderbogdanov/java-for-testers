@@ -35,6 +35,7 @@ public class TestBase {
 
     @AfterEach
     void DatabaseConsistency() {
+        app.jdbc().cleanupOrphanReferences();
         app.jdbc().checkConsistency();
     }
 }

@@ -21,6 +21,7 @@ public class ContactModificationTests extends TestBase {
 
         var contactsBefore = app.hbm().getContactList();
         var contactToModify = app.hbm().getRandomContact();
+        
         var newFirstName = "modified_" + CommonFunctions.randomString(5);
         var testData = new ContactData()
                 .withFirstName(newFirstName)

@@ -76,19 +76,31 @@ public class JdbcHelper extends HelperBase {
         return contacts;
     }
 
+    public void cleanupOrphanReferences() {
+        String deleteQuery = "DELETE FROM address_in_groups WHERE id NOT IN (SELECT id FROM addressbook)";
+        try (var connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+             var preparedStatement = connection.prepareStatement(deleteQuery)) {
+            int deleted = preparedStatement.executeUpdate();
+            System.out.println("Deleted orphan references: " + deleted);
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to cleanup orphan references", e);
+        }
+    }
+
+
     public void checkConsistency() {
         String query = "SELECT * FROM `address_in_groups` ag LEFT JOIN addressbook ab ON ab.id = ag.id WHERE ab.id IS NULL";
         try (var connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-                var preparedStatement = connection.prepareStatement(query);
-                var result = preparedStatement.executeQuery()) {
+             var preparedStatement = connection.prepareStatement(query);
+             var result = preparedStatement.executeQuery()) {
 
-                if (result.next()) {
-                    throw new IllegalStateException("DB is corrupted: there are contacts in groups that are not in the addressbook");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if (result.next()) {
+                throw new IllegalStateException("DB is corrupted: there are contacts in groups that are not in the addressbook");
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
