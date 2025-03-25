@@ -30,6 +30,16 @@ public class Generator {
     @Parameter(names = {"--count", "-c"})
     int count;
 
+    private String getResourceDir() {
+        try (var input = Generator.class.getClassLoader().getResourceAsStream("local.properties")) {
+            var props = new java.util.Properties();
+            props.load(input);
+            return props.getProperty("resource.dir");
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load 'resource.dir' from local.properties", e);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
@@ -78,7 +88,7 @@ public class Generator {
                     .withEmail(randomEmail())
                     .withEmail2(randomEmail())
                     .withEmail3(randomEmail())
-                    .withPhoto(getRandomImagePath("src/test/resources/images/"))
+                    .withPhoto(getRandomImagePath(getResourceDir()))
             );
         }
         return result;

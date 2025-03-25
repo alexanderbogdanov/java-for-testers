@@ -8,13 +8,11 @@ import ru.stqa.addressbook.manager.hbm.ContactRecord;
 import ru.stqa.addressbook.manager.hbm.GroupRecord;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
-import ru.stqa.addressbook.utils.ConversionUtil;
 
 import java.util.List;
 import java.util.Random;
 
-import static ru.stqa.addressbook.utils.ConversionUtil.convertContactList;
-import static ru.stqa.addressbook.utils.ConversionUtil.convertGroupList;
+import static ru.stqa.addressbook.utils.ConversionUtil.*;
 
 
 public class HibernateHelper extends HelperBase {
@@ -59,25 +57,6 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
-    private static GroupRecord convert(GroupData data) {
-        String id = data.id();
-        if (id == null || id.isEmpty()) {
-            id = "0";
-        }
-        return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
-    }
-
-    private static ContactRecord convert(ContactData data) {
-        String id = data.id();
-        if (id == null || id.isEmpty()) {
-            id = "0";
-        }
-        return new ContactRecord(Integer.parseInt(id), data.firstName(),
-                data.middleName(), data.lastName(), data.nickname(), data.company(), data.title(), data.address(),
-                data.homePhone(), data.mobilePhone(), data.workPhone(), data.fax(),
-                data.email(), data.email2(), data.email3(), data.homePage());
-    }
-
     public ContactData getRandomContact() {
         List<ContactData> contacts = getContactList();
         if (contacts.isEmpty()) {
@@ -93,8 +72,6 @@ public class HibernateHelper extends HelperBase {
         }
         return groups.get(new Random().nextInt(groups.size()));
     }
-
-
 
     public void createGroup(GroupData groupData) {
         sessionFactory.inSession(session -> {
@@ -117,6 +94,5 @@ public class HibernateHelper extends HelperBase {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
-
 
 }

@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
-import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static ru.stqa.addressbook.utils.CommonFunctions.*;
+import static ru.stqa.addressbook.utils.ListUtils.*;
 
 public class ContactCreationTests extends TestBase {
 
@@ -42,13 +42,13 @@ public class ContactCreationTests extends TestBase {
                 .withEmail2("ben.c@example.net")
                 .withEmail3("benny@example.co.uk")
                 .withHomePage("www.benedictcumberbatch.com")
-                .withPhoto(getRandomImagePath("src/test/resources/images/")));
+                .withPhoto(getRandomImagePath(resourceDir)));
 
         result.add(new ContactData());
         result.add(new ContactData().withFirstName("John"));
         result.add(new ContactData().withLastName("Doe"));
         result.add(new ContactData().withEmail("johndoe@example.com"));
-        result.add(new ContactData().withPhoto(getRandomImagePath("src/test/resources/images/")));
+        result.add(new ContactData().withPhoto(getRandomImagePath(resourceDir)));
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -132,37 +132,18 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-    public void testCreateContactInGroup() {
-        var contact = new ContactData()
-                .withFirstName(randomFirstName())
-                .withLastName(randomLastName())
-                .withPhoto(getRandomImagePath("src/test/resources/images/"));
-        if (app.hbm().getGroupCount() == 0) {
-            app.groups().createGroup(new GroupData().withName(randomCompany()));
-        }
-        // temporary workaround for the issue with the group creation
-        List<GroupData> groups = app.hbm().getGroupList();
-        assumeTrue(!groups.isEmpty(), "Group list is empty. Test skipped.");
+    public void testAddContactToGroup() {
+        GroupData group = preconditions.ensureGroupExists();
+        ContactData contact = preconditions.ensureContactExists();
 
-        var group = app.hbm().getGroupList().get(0);
-        var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createContact(contact, group);
-
-        var newRelated = app.hbm().getContactsInGroup(group);
-        var contactsAfter = app.hbm().getContactList();
-        contactsAfter.sort(Comparator.comparingInt(c -> Integer.parseInt(c.id())));
-        var newContact = contactsAfter.get(contactsAfter.size() - 1);
-        var expectedRelated = new ArrayList<>(oldRelated);
-        expectedRelated.add(newContact);
-        Comparator<ContactData> compareById = Comparator.comparingInt(c -> Integer.parseInt(c.id()));
-        newRelated.sort(compareById);
-        expectedRelated.sort(compareById);
-        assertEquals(oldRelated.size() + 1, newRelated.size());
-        assertEquals(expectedRelated, newRelated);
-
+        List<ContactData> oldRelated = app.hbm().getContactsInGroup(group);
+        assertFalse(oldRelated.contains(contact), "Contact is already in group before test");
+        app.contacts().addExistingContactToGroup(contact, group);
+        List<ContactData> newRelated = app.hbm().getContactsInGroup(group);
+        List<ContactData> expectedRelated = new ArrayList<>(oldRelated);
+        expectedRelated.add(contact);
+        sortContactsById(expectedRelated);
+        sortContactsById(newRelated);
+        assertEquals(expectedRelated, newRelated, "The contact was not properly added to the group.");
     }
-
-
-
-
 }

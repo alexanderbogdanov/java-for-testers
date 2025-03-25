@@ -6,28 +6,26 @@ import ru.stqa.addressbook.utils.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GroupModificationTests extends TestBase {
 
-    @Test
+ @Test
     void testGroupModification() {
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData().withName("Default group"));
-        }
+        preconditions.ensureGroupExists();
         var groupsBefore = app.hbm().getGroupList();
-        var index = new Random().nextInt(groupsBefore.size());
+        GroupData groupToModify = app.hbm().getRandomGroup();
         var newName = "modified_" + CommonFunctions.randomString(5);
         var testData = new GroupData().withName(newName);
-        app.groups().modifyGroup(groupsBefore.get(index), testData);
+        app.groups().modifyGroup(groupToModify, testData);
         var groupsAfter = app.hbm().getGroupList();
         var expectedGroups = new ArrayList<>(groupsBefore);
-        expectedGroups.set(index, testData.withId(groupsBefore.get(index).id()));
+        expectedGroups.removeIf(g -> g.id().equals(groupToModify.id()));
+        expectedGroups.add(testData.withId(groupToModify.id()));
         Comparator<GroupData> compareById = Comparator.comparingInt(g -> Integer.parseInt(g.id()));
-        groupsAfter.sort(compareById);
         expectedGroups.sort(compareById);
-        assertEquals(groupsAfter, expectedGroups);
+        groupsAfter.sort(compareById);
+        assertEquals(expectedGroups, groupsAfter);
     }
 }

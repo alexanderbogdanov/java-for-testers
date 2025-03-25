@@ -14,23 +14,19 @@ public class GroupDeletionTests extends TestBase {
 
     @Test
     public void testGroupDeletion() {
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData().withName("Default group"));
-        }
+        preconditions.ensureGroupExists();
         List<GroupData> groupsBefore = app.hbm().getGroupList();
-        var index = new Random().nextInt(groupsBefore.size());
-        app.groups().deleteGroup(groupsBefore.get(index));
+        GroupData groupToDelete = app.hbm().getRandomGroup();
+        app.groups().deleteGroup(groupToDelete);
         List<GroupData> groupsAfter = app.hbm().getGroupList();
         List<GroupData> expectedGroups = new ArrayList<>(groupsBefore);
-        expectedGroups.remove(index);
+        expectedGroups.removeIf(g -> g.id().equals(groupToDelete.id()));
         assertEquals(expectedGroups, groupsAfter);
     }
 
     @Test
     void testAllGroupsDeletion() {
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData().withName("Default group"));
-        }
+        preconditions.ensureGroupExists();
         app.groups().deleteAllGroups();
         assertEquals(0, app.hbm().getGroupCount());
     }
