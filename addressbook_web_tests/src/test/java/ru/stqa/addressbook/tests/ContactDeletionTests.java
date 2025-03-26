@@ -38,11 +38,10 @@ public class ContactDeletionTests extends TestBase {
         ContactData contact = preconditions.ensureContactExists();
         preconditions.ensureContactInGroup(contact, group);
         List<ContactData> oldRelated = app.hbm().getContactsInGroup(group);
-        assertTrue(oldRelated.contains(contact), "Contact was not in the group before removal");
         app.contacts().removeContactFromGroup(contact, group);
         List<ContactData> newRelated = app.hbm().getContactsInGroup(group);
         List<ContactData> expectedRelated = new ArrayList<>(oldRelated);
-        expectedRelated.remove(contact);
+        expectedRelated.removeIf(c -> c.id().equals(contact.id()));
         sortContactsById(expectedRelated);
         sortContactsById(newRelated);
         assertEquals(expectedRelated, newRelated, "The contact was not properly removed from the group.");

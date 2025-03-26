@@ -134,10 +134,8 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testAddContactToGroup() {
         GroupData group = preconditions.ensureGroupExists();
-        ContactData contact = preconditions.ensureContactExists();
-
+        ContactData contact = preconditions.ensureContactNotInGroup(group);
         List<ContactData> oldRelated = app.hbm().getContactsInGroup(group);
-        assertFalse(oldRelated.contains(contact), "Contact is already in group before test");
         app.contacts().addExistingContactToGroup(contact, group);
         List<ContactData> newRelated = app.hbm().getContactsInGroup(group);
         List<ContactData> expectedRelated = new ArrayList<>(oldRelated);

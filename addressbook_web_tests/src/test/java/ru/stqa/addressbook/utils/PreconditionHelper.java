@@ -54,6 +54,22 @@ public class PreconditionHelper {
         }
     }
 
+    public ContactData ensureContactNotInGroup(GroupData group) {
+        for (ContactData contact : app.hbm().getContactList()) {
+            if (!isContactInGroup(contact, group)) {
+                return contact;
+            }
+        }
+
+        ContactData contact = new ContactData()
+                .withFirstName("auto")
+                .withLastName("nogroup");
+        app.contacts().createContact(contact);
+
+        List<ContactData> updatedList = app.hbm().getContactList();
+        return updatedList.get(updatedList.size() - 1);
+    }
+
     public boolean isContactInGroup(ContactData contact, GroupData group) {
         List<ContactData> contactsInGroup = app.hbm().getContactsInGroup(group);
         return contactsInGroup.contains(contact);
