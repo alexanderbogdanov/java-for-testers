@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -58,8 +60,8 @@ public class ContactCreationTests extends TestBase {
         return result;
     }
 
-    public static List<ContactData> singleRandomContactProvider() {
-        return new ArrayList<>(List.of(new ContactData()
+    public static Stream<ContactData> randomContactProvider() {
+        Supplier<ContactData> randomContact = () -> new ContactData()
                 .withFirstName(randomFirstName())
                 .withMiddleName(randomMiddleName())
                 .withLastName(randomLastName())
@@ -74,13 +76,13 @@ public class ContactCreationTests extends TestBase {
                 .withEmail(randomEmail())
                 .withEmail2(randomEmail())
                 .withEmail3(randomEmail())
-                .withHomePage(randomHomePage())));
-
+                .withHomePage(randomHomePage());
+        return Stream.generate(randomContact).limit(3);
     }
 
 
     @ParameterizedTest
-    @MethodSource("singleRandomContactProvider")
+    @MethodSource("randomContactProvider")
     public void testContactCreation(ContactData contact) {
         var contactsBefore = app.hbm().getContactList();
         app.contacts().createContact(contact);

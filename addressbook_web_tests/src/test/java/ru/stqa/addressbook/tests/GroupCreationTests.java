@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -38,15 +40,17 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
-    public static List<GroupData> singleRandomGroupProvider() {
-        return new ArrayList<>(List.of(new GroupData()
+
+    public static Stream<GroupData> randomGroupProvider() {
+        Supplier<GroupData> randomGroup = () -> new GroupData()
                 .withName(randomCompany())
                 .withHeader(randomHeader())
-                .withFooter(randomFooter())));
+                .withFooter(randomFooter());
+        return Stream.generate(randomGroup).limit(3);
     }
 
     @ParameterizedTest
-    @MethodSource("singleRandomGroupProvider")
+    @MethodSource("randomGroupProvider")
     public void testGroupCreation(GroupData group) {
         var groupsBefore = app.hbm().getGroupList();
         app.groups().createGroup(group);
